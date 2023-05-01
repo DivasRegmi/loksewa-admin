@@ -8,6 +8,7 @@ import {
   useDeleteBannerMutation,
   useGetBannersQuery,
 } from "../../redux/bannerAPISlice";
+import AppSnackbar from "../../components/AppSnackbar";
 
 const DisplayBanner = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -18,7 +19,6 @@ const DisplayBanner = () => {
     useDeleteBannerMutation();
 
   const handleDeleteBanner = (name) => {
-    // deleteBanner("name");
     deleteBanner(name);
   };
 
@@ -93,15 +93,12 @@ const DisplayBanner = () => {
         ))}
       </Box>
 
-      <Snackbar
-        open={isErrorOnDelete}
-        autoHideDuration={1000}
-        onClose={() => {}}
-      >
-        <Alert onClose={() => {}} severity="error" sx={{ width: "100%" }}>
-          {errorOnDelete ? errorOnDelete.data.message : "Error on delete"}
-        </Alert>
-      </Snackbar>
+      <AppSnackbar
+        isOpen={isErrorOnDelete}
+        autoHideDuration={4000}
+        severity={"error"}
+        message={errorOnDelete ? errorOnDelete.data.message : "Error on delete"}
+      />
     </>
   );
 };

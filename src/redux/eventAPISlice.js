@@ -1,4 +1,3 @@
-import { log } from "react-native-reanimated";
 import { apiSlice } from "./apiSlice";
 
 export const eventApiSlice = apiSlice.injectEndpoints({
@@ -6,6 +5,29 @@ export const eventApiSlice = apiSlice.injectEndpoints({
     getEventSections: builder.query({
       query: () => "/api/event-sections/",
       providesTags: ["EventsSection"],
+    }),
+    addEventSection: builder.mutation({
+      query: (title) => ({
+        url: `/api/event-sections/`,
+        method: "POST",
+        body: { title: title },
+      }),
+      invalidatesTags: ["EventsSection"],
+    }),
+    updateEventSection: builder.mutation({
+      query: ({ eventSectionId, title }) => ({
+        url: `/api/event-sections/${eventSectionId}`,
+        method: "PATCH",
+        body: { title: title },
+      }),
+      invalidatesTags: ["EventsSection"],
+    }),
+    deleteEventSection: builder.mutation({
+      query: (eventSectionId) => ({
+        url: `/api/event-sections/${eventSectionId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["EventsSection"],
     }),
     getEventBySectionId: builder.query({
       query: (args) => {
@@ -56,7 +78,10 @@ export const eventApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useLazyGetEventBySectionIdQuery,
   useGetEventSectionsQuery,
+  useAddEventSectionMutation,
+  useUpdateEventSectionMutation,
+  useDeleteEventSectionMutation,
+  useLazyGetEventBySectionIdQuery,
   useLazyGetEventsByCustomizeSearchQuery,
 } = eventApiSlice;

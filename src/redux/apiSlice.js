@@ -7,7 +7,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: config.BASE_URL }),
   tagTypes: [
     "Banners",
-    "Courses",
+    "Sections",
     "topics",
     "Questions",
     "TodayExam",
