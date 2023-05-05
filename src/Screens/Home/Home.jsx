@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from "react";
+import MyPagination from "../../components/MyPagination";
 
 const Home = () => {
+  const [pageNumber, setpageNumber] = useState(0);
   return (
-    <div>Home</div>
-  )
-}
+    <div>
+      <MyPagination
+        pageNo={pageNumber}
+        totalPages={100}
+        onChangePage={(value) => setpageNumber(value)}
+      />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

@@ -10,6 +10,7 @@ export const apiSlice = createApi({
     "Sections",
     "topics",
     "Questions",
+    "QuestionsBySearch",
     "TodayExam",
     "ExamDetails",
     "Exam",

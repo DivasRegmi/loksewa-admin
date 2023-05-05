@@ -10,6 +10,10 @@ import RouteConfig from "./config/RouteConfig";
 import QuestionScreen from "./Screens/Question/QuestionScreen";
 import NewsSectionScreen from "./Screens/NewsSection/NewsSectionScreen";
 import EventSectionScreen from "./Screens/EventSection/EventSectionScreen";
+import NewsScreen from "./Screens/News/NewsScreen";
+import EventScreen from "./Screens/Event/EventScreen";
+import SearchQuestion from "./Screens/Question/SearchQuestion";
+import QuestionReport from "./Screens/Question/QuestionReport";
 
 function App() {
   return (
@@ -17,13 +21,33 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path={RouteConfig.BANNER_SCREEN} element={<BannerScreen />} />
+
         <Route path={RouteConfig.SECTION_SCREEN} element={<SectionScreen />} />
-        <Route path={RouteConfig.NEWS_SECTION_SCREEN} element={<NewsSectionScreen />} />
-        <Route path={RouteConfig.EVENT_SECTION_SCREEN} element={<EventSectionScreen />} />
         <Route path={RouteConfig.TOPIC_SCREEN} element={<TopicScreen />} />
+
+        <Route
+          path={RouteConfig.NEWS_SECTION_SCREEN}
+          element={<NewsSectionScreen />}
+        />
+        <Route path={RouteConfig.NEWS_SCREEN} element={<NewsScreen />} />
+
+        <Route path={RouteConfig.EVENT_SCREEN} element={<EventScreen />} />
+        <Route
+          path={RouteConfig.EVENT_SECTION_SCREEN}
+          element={<EventSectionScreen />}
+        />
+
         <Route
           path={RouteConfig.QUESTION_SCREEN}
           element={<QuestionScreen />}
+        />
+        <Route
+          path={RouteConfig.SEARCH_QUESTION}
+          element={<SearchQuestion />}
+        />
+        <Route
+          path={RouteConfig.QUESTION_REPORT}
+          element={<QuestionReport />}
         />
 
         {/* <Route path="*" element={<NoPage />} /> */}

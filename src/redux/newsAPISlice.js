@@ -29,10 +29,11 @@ export const newsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["NewsSection"],
     }),
+
     getNewsBySectionId: builder.query({
       query: (args) =>
         "/api/news/section/" +
-        args.sectionId +
+        args.newsSectionId +
         "?pageNo=" +
         args.pageNo +
         "&pageSize=" +
@@ -42,6 +43,29 @@ export const newsApiSlice = apiSlice.injectEndpoints({
     getNewsOfWeek: builder.query({
       query: () => "/api/news/grouped-by-date",
       providesTags: ["NewsByWeek"],
+    }),
+    addNews: builder.mutation({
+      query: ({ newsSectionId, body }) => ({
+        url: `/api/news/section/${newsSectionId}`,
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["News"],
+    }),
+    updateNews: builder.mutation({
+      query: ({ newsId, body }) => ({
+        url: `/api/news/${newsId}`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["News"],
+    }),
+    deleteNews: builder.mutation({
+      query: (newsId) => ({
+        url: `/api/news/${newsId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["News"],
     }),
   }),
   overrideExisting: true,
@@ -53,6 +77,10 @@ export const {
   useAddNewsSectionMutation,
   useDeleteNewsSectionMutation,
 
-  useLazyGetNewsBySectionIdQuery,
+  useGetNewsBySectionIdQuery,
   useGetNewsOfWeekQuery,
+
+  useAddNewsMutation,
+  useUpdateNewsMutation,
+  useDeleteNewsMutation,
 } = newsApiSlice;

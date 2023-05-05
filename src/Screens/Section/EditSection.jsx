@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
 import AppSnackbar from "../../components/AppSnackbar";
 import { useUpdateSectionMutation } from "../../redux/sectionAPISlice ";
@@ -137,6 +138,8 @@ const EditSection = ({ section, toggleEditSection }) => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
+          disabled={isLoading}
+          startIcon={<AddIcon />}
         >
           {isLoading ? "Creating..." : "Create"}
         </Button>

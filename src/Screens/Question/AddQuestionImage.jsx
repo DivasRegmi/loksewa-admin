@@ -9,19 +9,19 @@ import {
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
-import { useAddBannerMutation } from "../../redux/bannerAPISlice";
 import AppSnackbar from "../../components/AppSnackbar";
+import { useAddQuestionImageMutation } from "../../redux/QuestionsAPISlice";
 
-const AddBanner = () => {
+const AddQuestionImage = ({ questionId, onSuccuss }) => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [fileSize, setFileSize] = useState(0);
 
   const [
-    addBannerMutation,
-    { data: bannerResponse, isError, error: bannerError, isSuccess, isLoading },
-  ] = useAddBannerMutation();
+    addQuestionImageMutation,
+    { isError, error: questionImageError, isSuccess, isLoading },
+  ] = useAddQuestionImageMutation();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -42,26 +42,35 @@ const AddBanner = () => {
       return;
     }
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("image", file);
 
-    addBannerMutation(formData).catch((err) => console.log(err));
+    addQuestionImageMutation({
+      questionId: questionId,
+      formData: formData,
+    });
   };
 
   useEffect(() => {
     if (isError) {
-      if (bannerError && bannerError.data) {
-        console.log(bannerError);
-        setError(bannerError.data.message);
+      if (questionImageError && questionImageError.data) {
+        console.log(questionImageError);
+        setError(questionImageError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");
       }
     }
   }, [isError, error]);
 
+  useEffect(() => {
+    if (isSuccess && typeof onSuccuss === "function") {
+      onSuccuss();
+    }
+  }, [isSuccess]);
+
   return (
     <>
       <Typography variant="h5" mt={2}>
-        Upload Banner
+        Upload Image
       </Typography>
 
       <FormControl
@@ -93,7 +102,7 @@ const AddBanner = () => {
           disabled={isLoading}
           startIcon={<AddIcon />}
         >
-          {isLoading ? "Adding..." : "Add Banner"}
+          {isLoading ? "Adding..." : "Add Image"}
         </Button>
       </FormControl>
 
@@ -101,10 +110,10 @@ const AddBanner = () => {
         isOpen={isSuccess}
         autoHideDuration={4000}
         severity={"success"}
-        message={bannerResponse ? bannerResponse.message : "Success"}
+        message={"Image uploaded"}
       />
     </>
   );
 };
 
-export default AddBanner;
+export default AddQuestionImage;

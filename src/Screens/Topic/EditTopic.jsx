@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Add as AddIcon } from "@mui/icons-material";
 
 import { useUpdateTopicMutation } from "../../redux/topicsAPISlice";
 
@@ -89,6 +90,8 @@ const EditTopic = ({ topic, toggleEditTopic }) => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
+          disabled={isLoading}
+          startIcon={<AddIcon />}
         >
           {isLoading ? "Updating..." : "Update"}
         </Button>

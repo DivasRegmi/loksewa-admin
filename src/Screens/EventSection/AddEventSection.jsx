@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
 import AppSnackbar from "../../components/AppSnackbar";
 import { useAddEventSectionMutation } from "../../redux/eventAPISlice";
@@ -72,8 +73,10 @@ const AddEventSection = () => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
+          disabled={isLoading}
+          startIcon={<AddIcon />}
         >
-          {isLoading ? "Creating..." : "Create"}
+          {isLoading ? "Adding..." : "Add Event Section"}
         </Button>
       </FormControl>
 

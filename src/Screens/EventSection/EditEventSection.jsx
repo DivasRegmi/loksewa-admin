@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Add as AddIcon } from "@mui/icons-material";
 
 import { useUpdateEventSectionMutation } from "../../redux/eventAPISlice";
 
@@ -89,6 +90,9 @@ const EditEventSection = ({ eventSection, toggleEditEventSection }) => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
+          startIcon={<AddIcon />}
+          disabled={isLoading}
+
         >
           {isLoading ? "Updating..." : "Update"}
         </Button>

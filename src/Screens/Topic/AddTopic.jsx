@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
 import AppSnackbar from "../../components/AppSnackbar";
 import { useAddTopicMutation } from "../../redux/topicsAPISlice";
@@ -72,8 +73,10 @@ const AddTopic = ({ sectionId }) => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
+          startIcon={<AddIcon />}
+          disabled={isLoading}
         >
-          {isLoading ? "Creating..." : "Create"}
+          {isLoading ? "Creating..." : "Add Topic"}
         </Button>
       </FormControl>
 

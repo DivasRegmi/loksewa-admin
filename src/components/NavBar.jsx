@@ -34,6 +34,8 @@ const NavBar = () => {
           <LinkStyled to={RouteConfig.SECTION_SCREEN}>Sections</LinkStyled>
           <LinkStyled to={RouteConfig.EVENT_SECTION_SCREEN}>Event</LinkStyled>
           <LinkStyled to={RouteConfig.NEWS_SECTION_SCREEN}>News</LinkStyled>
+          <LinkStyled to={RouteConfig.SEARCH_QUESTION}>Question</LinkStyled>
+          <LinkStyled to={RouteConfig.QUESTION_REPORT}>Report</LinkStyled>
         </Box>
       </Toolbar>
     </Navbar>

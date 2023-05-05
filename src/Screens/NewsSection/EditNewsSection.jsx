@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Add as AddIcon } from "@mui/icons-material";
 
 import { useUpdateNewsSectionMutation } from "../../redux/newsAPISlice";
 
@@ -89,6 +90,8 @@ const EditNewsSection = ({ newsSection, toggleEditNewsSection }) => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
+          startIcon={<AddIcon />}
+          disabled={isLoading}
         >
           {isLoading ? "Updating..." : "Update"}
         </Button>
