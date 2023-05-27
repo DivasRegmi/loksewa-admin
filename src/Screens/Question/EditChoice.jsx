@@ -28,7 +28,6 @@ const EditChoice = ({ choiceItem, toggleEditChoice, onSuccuss }) => {
   useEffect(() => {
     if (isError) {
       if (choiceError && choiceError.data) {
-        console.log(choiceError);
         setError(choiceError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");

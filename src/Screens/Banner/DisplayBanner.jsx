@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Alert, Box, IconButton, Snackbar, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, IconButton,  Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
@@ -27,8 +26,14 @@ const DisplayBanner = () => {
   }
 
   if (isError) {
-    console.log(error);
-    return <ErrorDisplay message={error.error} />;
+    let errMsg;
+    if (error && error.data && error.data.message) {
+      errMsg = error.data.message;
+    } else {
+      errMsg = "Something went wrong. Please try again later.";
+    }
+
+    return <ErrorDisplay message={errMsg} />;
   }
 
   return (

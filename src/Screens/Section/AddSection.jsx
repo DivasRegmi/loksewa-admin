@@ -31,7 +31,6 @@ const AddSection = () => {
 
   useEffect(() => {
     if (isError) {
-      console.log(error);
       if (error && error.data) {
         setFormErrors({ _error: error.data.message });
       } else {

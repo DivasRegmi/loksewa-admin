@@ -31,7 +31,6 @@ const AddEvent = ({ eventSectionId }) => {
   useEffect(() => {
     if (isError) {
       if (eventError && eventError.data) {
-        console.log(eventError);
 
         setError(
           eventError.data.day ||

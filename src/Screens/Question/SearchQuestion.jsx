@@ -39,12 +39,10 @@ const SearchQuestion = () => {
     searchQuestion(searchTerm)
       .then((res) => {
         if (res) {
-          console.log(res);
           setQuestions([...res.data]);
         }
       })
       .catch((error) => {
-        console.log("Error search Question:", error);
       });
   };
 
@@ -53,7 +51,14 @@ const SearchQuestion = () => {
   }
 
   if (isError) {
-    return <ErrorDisplay message={error.error} />;
+    let errMsg;
+    if (error && error.data && error.data.message) {
+      errMsg = error.data.message;
+    } else {
+      errMsg = "Something went wrong. Please try again later.";
+    }
+
+    return <ErrorDisplay message={errMsg} />;
   }
 
   return (

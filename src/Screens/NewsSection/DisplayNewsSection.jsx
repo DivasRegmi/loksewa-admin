@@ -69,7 +69,14 @@ const DisplayNewsSection = () => {
   }
 
   if (isError) {
-    return <ErrorDisplay message={error.error} />;
+    let errMsg;
+    if (error && error.data && error.data.message) {
+      errMsg = error.data.message;
+    } else {
+      errMsg = "Something went wrong. Please try again later.";
+    }
+
+    return <ErrorDisplay message={errMsg} />;
   }
 
   return (

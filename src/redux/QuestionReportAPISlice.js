@@ -25,6 +25,5 @@ export const questionsReportApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetQuestionsReportQuery,
-
   useDeleteQuestionReportMutation,
 } = questionsReportApiSlice;

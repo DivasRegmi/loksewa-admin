@@ -16,11 +16,9 @@ import RouteConfig from "../../config/RouteConfig";
 
 const DisplayTopic = ({ sectionId }) => {
   const navigate = useNavigate();
-  const [showEditTopic, setShowEditTopic] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState({ id: -1 });
 
   const toggleEditSection = (selectedTopic) => {
-    setShowEditTopic((prevData) => !prevData);
     setSelectedTopic(selectedTopic);
   };
 
@@ -41,7 +39,14 @@ const DisplayTopic = ({ sectionId }) => {
   }
 
   if (isError) {
-    return <ErrorDisplay message={error.error} />;
+    let errMsg;
+    if (error && error.data && error.data.message) {
+      errMsg = error.data.message;
+    } else {
+      errMsg = "Something went wrong. Please try again later.";
+    }
+
+    return <ErrorDisplay message={errMsg} />;
   }
 
   return (

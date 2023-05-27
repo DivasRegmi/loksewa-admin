@@ -1,29 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditSharpIcon from "@mui/icons-material/EditSharp";
 import { useDeleteQuestionImageMutation } from "../../redux/QuestionsAPISlice";
 import AppSnackbar from "../../components/AppSnackbar";
 import AddQuestionImage from "./AddQuestionImage";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 
 const DisplayImage = ({ src, questionId, onSuccuss }) => {
   const [hovered, setHovered] = useState(null);
   const [displayEditImage, setDisplayEditImage] = useState(false);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
 
   const [
     deleteQuestionImageMutation,
     { isError: isErrorOnDelete, error: errorOnDelete, isSuccess },
   ] = useDeleteQuestionImageMutation();
 
-  const handleDeleteQuestionImage = () => {
-    deleteQuestionImageMutation(questionId);
-  };
-
   useEffect(() => {
     if (isSuccess && typeof onSuccuss === "function") {
       onSuccuss();
     }
   }, [isSuccess]);
+
+  const handleDeleteQuestionImage = () => {
+    handleConfirmationOpen();
+  };
+
+  const handleConfirmationOpen = () => {
+    setConfirmationOpen(true);
+  };
+
+  const handleConfirmationClose = () => {
+    setConfirmationOpen(false);
+  };
+  const handleConfirm = () => {
+    deleteQuestionImageMutation(questionId);
+    handleConfirmationClose();
+  };
 
   return (
     <>
@@ -95,6 +108,13 @@ const DisplayImage = ({ src, questionId, onSuccuss }) => {
           Add Image
         </Button>
       )}
+      <ConfirmationDialog
+        title={"Confirm Delete"}
+        description={"Are you sure you want to delete this item?"}
+        open={confirmationOpen}
+        handleClose={handleConfirmationClose}
+        handleConfirm={handleConfirm}
+      />
       <AppSnackbar
         isOpen={isErrorOnDelete}
         autoHideDuration={4000}

@@ -53,7 +53,6 @@ const AddQuestionImage = ({ questionId, onSuccuss }) => {
   useEffect(() => {
     if (isError) {
       if (questionImageError && questionImageError.data) {
-        console.log(questionImageError);
         setError(questionImageError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");

@@ -53,7 +53,6 @@ const AddQuestion = ({ topicId }) => {
   useEffect(() => {
     if (isError) {
       if (questionError && questionError.data) {
-        console.log(questionError);
         setError(questionError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");

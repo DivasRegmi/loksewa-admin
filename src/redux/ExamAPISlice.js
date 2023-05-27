@@ -9,36 +9,59 @@ export const examApiSlice = apiSlice.injectEndpoints({
         "&to=" +
         args.to +
         "&pageNo=" +
-        (args.pageNo || 0) +
+        args.pageNo +
         "&pageSize=" +
-        (args.pageSize || 10),
-      providesTags: ["TodayExam"],
+        args.pageSize,
+      providesTags: ["Exams"],
     }),
-    getExamById: builder.query({
-      query: (id) => "/api/exams/" + id,
+    getExamQuestionsById: builder.query({
+      query: ({ examId, pageNo, pageSize }) =>
+        `/api/exams/${examId}/questions?pageNo=${pageNo}&pageSize=${pageSize}`,
       providesTags: ["ExamDetails"],
     }),
-    getStudentResultByExamIdAndUserId: builder.query({
-      query: (args) => "api/studentResults/users/" + args.userId + "/exams/" + args.examId,
-      providesTags: ["ExamResult"],
-    }),
-    addExamResultToUser: builder.mutation({
-      query: (args) => ({
-        url:
-          "/api/studentResults/users/" + args.userId + "/exams/" + args.examId,
+    addExam: builder.mutation({
+      query: (body) => ({
+        url: `/api/exams`,
         method: "POST",
-        body: args.body,
+        body: body,
       }),
-      invalidatesTags: ["Exam"],
+      invalidatesTags: ["Exams"],
+    }),
+    updateExam: builder.mutation({
+      query: ({ examId, body }) => ({
+        url: `/api/exams/${examId}`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Exams"],
+    }),
+    addQuestionsToExamBySectionId: builder.mutation({
+      query: ({ examId, examModelSetSectionId }) => ({
+        url: `/api/exams/${examId}/exam-model-set-section/${examModelSetSectionId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Exams"],
+    }),
+
+    deleteExamById: builder.mutation({
+      query: (examId) => ({
+        url: `/api/exams/${examId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Exams"],
     }),
   }),
   overrideExisting: true,
 });
 
 export const {
+  useGetExamQuestionsByIdQuery,
   useGetExamListByDateQuery,
-  useGetExamByIdQuery,
-  useAddExamResultToUserMutation,
-  useLazyGetStudentResultByExamIdAndUserIdQuery,
-  useGetStudentResultByExamIdAndUserIdQuery
+
+  useAddExamMutation,
+  useUpdateExamMutation,
+
+  useAddQuestionsToExamBySectionIdMutation,
+
+  useDeleteExamByIdMutation,
 } = examApiSlice;

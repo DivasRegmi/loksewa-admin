@@ -1,4 +1,7 @@
-export default {
+const RouteConfig = {
+  LOGIN_SCREEN: "login",
+  REGISTER_SCREEN: "register",
+
   BANNER_SCREEN: "bannerscreen",
 
   SECTION_SCREEN: "sectionscreen",
@@ -14,5 +17,16 @@ export default {
   EVENT_SCREEN: "eventscreen",
 
   EXAM_SCREEN: "examscreen",
-  
+  EXAM_DETAILS: "examdetails",
+
+  EXAM_MODEL_SET_SECTION: "exammodelsetsectionscreen",
+  EXAM_MODEL_SET: "exammodelsetscreen",
+
+  PAYMENT: "payment",
+  PAYMENT_BY_USER_ID: "paymentbyid",
+
+  USERS_SCREEN: "users",
+  EDIT_USER_SCREEN: "edituser",
 };
+
+export default RouteConfig;

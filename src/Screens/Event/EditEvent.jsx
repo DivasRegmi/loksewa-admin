@@ -33,7 +33,6 @@ const EditEvent = ({ event, toggleEditEvent }) => {
   useEffect(() => {
     if (isError) {
       if (eventError && eventError.data) {
-        console.log(eventError);
 
         setError(
           eventError.data.day ||

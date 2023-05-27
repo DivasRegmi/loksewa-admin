@@ -1,56 +1,111 @@
-import NavBar from "./components/NavBar";
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Home from "./Screens/Home/Home";
-import Layout from "./components/Layout";
-import BannerScreen from "./Screens/Banner/BannerScreen";
-import SectionScreen from "./Screens/Section/SectionScreen";
-import TopicScreen from "./Screens/Topic/TopicScreen";
 import RouteConfig from "./config/RouteConfig";
-import QuestionScreen from "./Screens/Question/QuestionScreen";
-import NewsSectionScreen from "./Screens/NewsSection/NewsSectionScreen";
-import EventSectionScreen from "./Screens/EventSection/EventSectionScreen";
-import NewsScreen from "./Screens/News/NewsScreen";
-import EventScreen from "./Screens/Event/EventScreen";
-import SearchQuestion from "./Screens/Question/SearchQuestion";
-import QuestionReport from "./Screens/Question/QuestionReport";
+import Layout from "./components/Layout";
+import NotFoundPage from "./components/NotFoundPage";
+import PrivateRoutes from "./components/PrivateRoutes";
+import SuspenseRoutes from "./components/SuspenseRoutes";
+
+
+const Home = lazy(() => import("./Screens/Home/Home"));
+const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
+const SectionScreen = lazy(() => import("./Screens/Section/SectionScreen"));
+const TopicScreen = lazy(() => import("./Screens/Topic/TopicScreen"));
+const QuestionScreen = lazy(() => import("./Screens/Question/QuestionScreen"));
+const NewsSectionScreen = lazy(() =>
+  import("./Screens/NewsSection/NewsSectionScreen")
+);
+const EventSectionScreen = lazy(() =>
+  import("./Screens/EventSection/EventSectionScreen")
+);
+const NewsScreen = lazy(() => import("./Screens/News/NewsScreen"));
+const EventScreen = lazy(() => import("./Screens/Event/EventScreen"));
+const SearchQuestion = lazy(() => import("./Screens/Question/SearchQuestion"));
+const QuestionReport = lazy(() => import("./Screens/Question/QuestionReport"));
+const ExamScreen = lazy(() => import("./Screens/Exam/ExamScreen"));
+const ExamDetails = lazy(() => import("./Screens/Exam/ExamDetails"));
+const ExamModelSetSectionScreen = lazy(() =>
+  import("./Screens/ExamModelSetSection/ExamModelSetSectionScreen")
+);
+const ExamModelSetScreen = lazy(() =>
+  import("./Screens/ExamModelSet/ExamModelSetScreen")
+);
+const PaymentScreen = lazy(() => import("./Screens/Payment/PaymentScreen"));
+const LoginScreen = lazy(() => import("./Screens/Auth/LoginScreen"));
+const RegisterScreen = lazy(() => import("./Screens/Auth/RegisterScreen"));
+const UserScreen = lazy(() => import("./Screens/Users/UserScreen"));
+const EditUser = lazy(() => import("./Screens/Users/EditUser"));
+const DisplayPaymentByUserId = lazy(() =>
+  import("./Screens/Payment/DisplayPaymentByUserId")
+);
+
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path={RouteConfig.BANNER_SCREEN} element={<BannerScreen />} />
+        <Route element={<SuspenseRoutes />}>
+          <Route path={RouteConfig.LOGIN_SCREEN} element={<LoginScreen />} />
+          <Route
+            path={RouteConfig.REGISTER_SCREEN}
+            element={<RegisterScreen />}
+          />
 
-        <Route path={RouteConfig.SECTION_SCREEN} element={<SectionScreen />} />
-        <Route path={RouteConfig.TOPIC_SCREEN} element={<TopicScreen />} />
+          <Route element={<PrivateRoutes />}>
+            <Route index element={<Home />} />
+            <Route path={RouteConfig.USERS_SCREEN} element={<UserScreen />} />
+            <Route path={RouteConfig.EDIT_USER_SCREEN} element={<EditUser />} />
+            <Route path={RouteConfig.PAYMENT} element={<PaymentScreen />} />
+            <Route
+              path={RouteConfig.PAYMENT_BY_USER_ID}
+              element={<DisplayPaymentByUserId />}
+            />
 
-        <Route
-          path={RouteConfig.NEWS_SECTION_SCREEN}
-          element={<NewsSectionScreen />}
-        />
-        <Route path={RouteConfig.NEWS_SCREEN} element={<NewsScreen />} />
-
-        <Route path={RouteConfig.EVENT_SCREEN} element={<EventScreen />} />
-        <Route
-          path={RouteConfig.EVENT_SECTION_SCREEN}
-          element={<EventSectionScreen />}
-        />
-
-        <Route
-          path={RouteConfig.QUESTION_SCREEN}
-          element={<QuestionScreen />}
-        />
-        <Route
-          path={RouteConfig.SEARCH_QUESTION}
-          element={<SearchQuestion />}
-        />
-        <Route
-          path={RouteConfig.QUESTION_REPORT}
-          element={<QuestionReport />}
-        />
-
-        {/* <Route path="*" element={<NoPage />} /> */}
+            <Route
+              path={RouteConfig.BANNER_SCREEN}
+              element={<BannerScreen />}
+            />
+            <Route
+              path={RouteConfig.SECTION_SCREEN}
+              element={<SectionScreen />}
+            />
+            <Route path={RouteConfig.TOPIC_SCREEN} element={<TopicScreen />} />
+            <Route
+              path={RouteConfig.NEWS_SECTION_SCREEN}
+              element={<NewsSectionScreen />}
+            />
+            <Route path={RouteConfig.NEWS_SCREEN} element={<NewsScreen />} />
+            <Route path={RouteConfig.EVENT_SCREEN} element={<EventScreen />} />
+            <Route
+              path={RouteConfig.EVENT_SECTION_SCREEN}
+              element={<EventSectionScreen />}
+            />
+            <Route
+              path={RouteConfig.QUESTION_SCREEN}
+              element={<QuestionScreen />}
+            />
+            <Route
+              path={RouteConfig.SEARCH_QUESTION}
+              element={<SearchQuestion />}
+            />
+            <Route
+              path={RouteConfig.QUESTION_REPORT}
+              element={<QuestionReport />}
+            />
+            <Route path={RouteConfig.EXAM_SCREEN} element={<ExamScreen />} />
+            <Route path={RouteConfig.EXAM_DETAILS} element={<ExamDetails />} />
+            <Route
+              path={RouteConfig.EXAM_MODEL_SET_SECTION}
+              element={<ExamModelSetSectionScreen />}
+            />
+            <Route
+              path={RouteConfig.EXAM_MODEL_SET}
+              element={<ExamModelSetScreen />}
+            />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Route>
     </Routes>
   );

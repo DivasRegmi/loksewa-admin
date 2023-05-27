@@ -6,6 +6,12 @@ export const topicsApiSlice = apiSlice.injectEndpoints({
       query: (id) => `api/sections/${id}/topics`,
       providesTags: ["topics"],
     }),
+  
+    getAllTopics: builder.query({
+      query: (id) => `/api/topics`,
+      providesTags: ["allTopics"],
+    }),
+  
     addTopic: builder.mutation({
       query: ({ sectionId, title }) => ({
         url: `/api/sections/${sectionId}/topics`,
@@ -24,10 +30,11 @@ export const topicsApiSlice = apiSlice.injectEndpoints({
     }),
   }),
   overrideExisting: true,
-});
+});                 
 
 export const {
   useGetTopicsQuery,
+  useGetAllTopicsQuery,
   useUpdateTopicMutation,
   useAddTopicMutation,
 } = topicsApiSlice;

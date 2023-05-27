@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
   Box,
   Button,
+  Divider,
   FormControl,
   IconButton,
   InputLabel,
@@ -95,15 +96,21 @@ const QuestionReport = () => {
     if (isSuccessDelete) {
       refetch();
     }
-  }, [isSuccessDelete]);
+  }, [isSuccessDelete, refetch]);
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (isError) {
-    console.log(error);
-    return <ErrorDisplay message={error.error} />;
+    let errMsg;
+    if (error && error.data && error.data.message) {
+      errMsg = error.data.message;
+    } else {
+      errMsg = "Something went wrong. Please try again later.";
+    }
+
+    return <ErrorDisplay message={errMsg} />;
   }
 
   return (
@@ -124,6 +131,10 @@ const QuestionReport = () => {
           ))}
         </Select>
       </FormControl>
+
+      <Divider sx={{ my: 2 }} />
+
+      <Typography variant="h5" sx={{ my: 2 }}>Reports</Typography>
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {reports.content.map((question) => (

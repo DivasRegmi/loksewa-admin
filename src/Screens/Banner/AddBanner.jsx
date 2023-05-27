@@ -44,13 +44,12 @@ const AddBanner = () => {
     const formData = new FormData();
     formData.append("file", file);
 
-    addBannerMutation(formData).catch((err) => console.log(err));
+    addBannerMutation(formData)
   };
 
   useEffect(() => {
     if (isError) {
       if (bannerError && bannerError.data) {
-        console.log(bannerError);
         setError(bannerError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");

@@ -27,7 +27,6 @@ const EditNews = ({ newsItem, toggleEditNews }) => {
   useEffect(() => {
     if (isError) {
       if (newsError && newsError.data) {
-        console.log(newsError);
         setError(newsError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");
