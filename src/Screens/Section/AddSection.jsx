@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   FormControl,
+  InputLabel,
   OutlinedInput,
+  Select,
   TextField,
   Typography,
+  MenuItem,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
 import AppSnackbar from "../../components/AppSnackbar";
 import { useAddSectionMutation } from "../../redux/sectionAPISlice ";
+
+const types = ["GK", "IQ", "ENGLISH"];
 
 const AddSection = () => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
@@ -17,6 +22,7 @@ const AddSection = () => {
   const [formData, setFormData] = useState({ title: "", image: null });
   const [formErrors, setFormErrors] = useState({});
   const [fileSizeError, setFileSizeError] = useState(false);
+  const [selectedType, setSelectedType] = useState(types[0]);
 
   const [addSectionMutation, { isError, error, isSuccess, isLoading }] =
     useAddSectionMutation();
@@ -62,6 +68,7 @@ const AddSection = () => {
     const formDataWithFile = new FormData();
     formDataWithFile.append("title", formData.title);
     formDataWithFile.append("image", formData.image);
+    formDataWithFile.append("type", selectedType);
     addSectionMutation(formDataWithFile);
   };
 
@@ -76,6 +83,10 @@ const AddSection = () => {
         setFormData({ ...formData, image: file });
       }
     }
+  };
+
+  const handleSectionTypeChange = (event) => {
+    setSelectedType(event.target.value);
   };
 
   return (
@@ -111,6 +122,26 @@ const AddSection = () => {
             </Button>
           }
         />
+
+        <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
+          <InputLabel id="section-type-select-label">
+            Select type 
+          </InputLabel>
+          <Select
+            label="Select type"
+            labelId="section-type-select-label"
+            id="section-type-select"
+            value={selectedType}
+            onChange={handleSectionTypeChange}
+          >
+            {types.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         {formErrors._error && (
           <Typography variant="subtitle2" color="error">
             {formErrors._error}

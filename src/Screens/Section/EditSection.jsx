@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   FormControl,
+  InputLabel,
+  MenuItem,
   OutlinedInput,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -11,12 +14,14 @@ import { Add as AddIcon } from "@mui/icons-material";
 import AppSnackbar from "../../components/AppSnackbar";
 import { useUpdateSectionMutation } from "../../redux/sectionAPISlice ";
 
+const types = ["GK", "IQ", "ENGLISH"];
 const EditSection = ({ section, toggleEditSection }) => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
 
   const [formData, setFormData] = useState({
     title: section.title,
     image: null,
+    type: section.type,
   });
   const [formErrors, setFormErrors] = useState({});
   const [fileSizeError, setFileSizeError] = useState(false);
@@ -26,7 +31,7 @@ const EditSection = ({ section, toggleEditSection }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setFormData({ title: "", image: null });
+      setFormData({ title: "", image: null, type: types[0] });
       setFileSizeError(false);
       setFormErrors({});
       toggleEditSection();
@@ -48,9 +53,13 @@ const EditSection = ({ section, toggleEditSection }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = {};
-    const { title, image } = formData;
+    const { title, image , type} = formData;
     if (!title.trim()) {
       errors.title = "Title is required";
+    }
+
+    if (!type.trim()) {
+      errors.type = "Type is required";
     }
 
     if (image && image.size > MAX_FILE_SIZE) {
@@ -64,6 +73,7 @@ const EditSection = ({ section, toggleEditSection }) => {
 
     const formDataWithImage = new FormData();
     formDataWithImage.append("title", title);
+    formDataWithImage.append("type", type);
     if (image) {
       formDataWithImage.append("image", image);
     }
@@ -81,6 +91,10 @@ const EditSection = ({ section, toggleEditSection }) => {
         setFormData({ ...formData, image: file });
       }
     }
+  };
+
+  const handleSectionTypeChange = (event) => {
+    setFormData({ ...formData, type: event.target.value });
   };
 
   return (
@@ -116,6 +130,25 @@ const EditSection = ({ section, toggleEditSection }) => {
             </Button>
           }
         />
+         <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
+          <InputLabel id="section-type-select-label">
+            Select type 
+          </InputLabel>
+          <Select
+            label="Select type"
+            labelId="section-type-select-label"
+            id="section-type-select"
+            value={section.type}
+            onChange={handleSectionTypeChange}
+          >
+            {types.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        
         {formErrors._error && (
           <Typography variant="subtitle2" color="error">
             {formErrors._error}
