@@ -4,6 +4,9 @@ const RouteConfig = {
 
   BANNER_SCREEN: "bannerscreen",
 
+  CATEGORY_SCREEN:"categoryscreen",
+  ADD_SECTION_TO_CATEGORY_SCREEN:"addsectiontocategoryscreen",
+
   SECTION_SCREEN: "sectionscreen",
   TOPIC_SCREEN: "topicscreen",
   QUESTION_SCREEN: "questionscreen",

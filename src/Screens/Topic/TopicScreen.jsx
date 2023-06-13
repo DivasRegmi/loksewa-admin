@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import DisplayTopic from "./DisplayTopic";
 import AddTopic from "./AddTopic";
 import { Typography } from "@mui/material";

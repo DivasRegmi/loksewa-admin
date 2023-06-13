@@ -7,6 +7,12 @@ export const sectionApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Sections"],
       invalidatesTags: ["Sections"],
     }),
+    getSectionsByCategoryId: builder.query({
+      query: (categoryId) => `/api/sections/category/${categoryId}`,
+      providesTags: ["SectionByCategorieId"],
+      invalidatesTags: ["SectionByCategorieId"],
+    }),
+
     addSection: builder.mutation({
       query: (formData) => ({
         url: "/api/sections",
@@ -27,4 +33,9 @@ export const sectionApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useGetSectionsQuery, useAddSectionMutation, useUpdateSectionMutation } = sectionApiSlice;
+export const {
+  useGetSectionsQuery,
+  useGetSectionsByCategoryIdQuery,
+  useAddSectionMutation,
+  useUpdateSectionMutation,
+} = sectionApiSlice;

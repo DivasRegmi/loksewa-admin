@@ -49,6 +49,8 @@ export const apiSlice = createApi({
     "paymentDetails",
 
     "user",
+    "SectionByCategorieId",
+    "Category",
   ],
   endpoints: (builder) => ({}),
 });

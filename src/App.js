@@ -6,7 +6,8 @@ import Layout from "./components/Layout";
 import NotFoundPage from "./components/NotFoundPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import SuspenseRoutes from "./components/SuspenseRoutes";
-
+import CategoryScreen from "./Screens/Category/CategoryScreen";
+import AddSectionToCategoryScreen from "./Screens/Category/AddSectionToCategoryScreen";
 
 const Home = lazy(() => import("./Screens/Home/Home"));
 const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
@@ -40,7 +41,6 @@ const DisplayPaymentByUserId = lazy(() =>
   import("./Screens/Payment/DisplayPaymentByUserId")
 );
 
-
 function App() {
   return (
     <Routes>
@@ -65,6 +65,14 @@ function App() {
             <Route
               path={RouteConfig.BANNER_SCREEN}
               element={<BannerScreen />}
+            />
+            <Route
+              path={RouteConfig.CATEGORY_SCREEN}
+              element={<CategoryScreen />}
+            />
+            <Route
+              path={RouteConfig.ADD_SECTION_TO_CATEGORY_SCREEN}
+              element={<AddSectionToCategoryScreen />}
             />
             <Route
               path={RouteConfig.SECTION_SCREEN}
