@@ -138,7 +138,7 @@ const EditSection = ({ section, toggleEditSection }) => {
             label="Select type"
             labelId="section-type-select-label"
             id="section-type-select"
-            value={section.type}
+            value={formData.type}
             onChange={handleSectionTypeChange}
           >
             {types.map((option) => (

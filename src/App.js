@@ -8,6 +8,8 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import SuspenseRoutes from "./components/SuspenseRoutes";
 import CategoryScreen from "./Screens/Category/CategoryScreen";
 import AddSectionToCategoryScreen from "./Screens/Category/AddSectionToCategoryScreen";
+import TopicDescriptionScreen from "./Screens/TopicDescription/TopicDescriptionScreen";
+import CKEditorTopicDescription from "./Screens/TopicDescription/CKEditorTopicDescription";
 
 const Home = lazy(() => import("./Screens/Home/Home"));
 const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
@@ -79,6 +81,15 @@ function App() {
               element={<SectionScreen />}
             />
             <Route path={RouteConfig.TOPIC_SCREEN} element={<TopicScreen />} />
+            <Route
+              path={RouteConfig.TOPIC_DESCRIPTION_SCREEN}
+              element={<TopicDescriptionScreen />}
+            />
+            <Route
+              path={RouteConfig.TOPIC_DESCRIPTION_CK_Editor_SCREEN}
+              element={<CKEditorTopicDescription />}
+            />
+
             <Route
               path={RouteConfig.NEWS_SECTION_SCREEN}
               element={<NewsSectionScreen />}

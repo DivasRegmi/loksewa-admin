@@ -31,6 +31,7 @@ export const apiSlice = createApi({
     "Banners",
     "Sections",
     "topics",
+    "topicDescriptions",
     "allTopics",
     "Questions",
     "QuestionsBySearch",

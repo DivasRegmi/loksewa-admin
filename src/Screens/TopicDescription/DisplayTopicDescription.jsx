@@ -6,34 +6,37 @@ import {
   Typography,
 } from "@mui/material";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
-import TopicIcon from "@mui/icons-material/Topic";
 import React, { useState } from "react";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import Loading from "../../components/Loading";
-import { useGetTopicsQuery } from "../../redux/topicsAPISlice";
-import EditTopic from "./EditTopic";
 import { useNavigate } from "react-router-dom";
 import RouteConfig from "../../config/RouteConfig";
 
-const DisplayTopic = ({ sectionId }) => {
-  const navigate = useNavigate();
-  const [selectedTopic, setSelectedTopic] = useState({ id: -1 });
+import { useGetTopicDescriptionByTopicIdQuery } from "../../redux/topicDescriptionAPISlice";
+import EditTopicDescription from "./EditTopicDescription";
 
-  const toggleEditSection = (selectedTopic) => {
-    setSelectedTopic(selectedTopic);
+const DisplayTopicDescription = ({ topicId }) => {
+  const navigate = useNavigate();
+  const [selectedTopicDescription, setSelectedTopicDescription] = useState({
+    id: -1,
+  });
+
+  const toggleEditSection = (selectedTopicDescription) => {
+    setSelectedTopicDescription(selectedTopicDescription);
   };
 
-  const onClickTopic = (topic) => {
-    const data = { topic: topic };
-    navigate(`/${RouteConfig.QUESTION_SCREEN}`, { state: data });
+  const onClickTopic = (topicDescription) => {
+    navigate(`/${RouteConfig.TOPIC_DESCRIPTION_CK_Editor_SCREEN}`, {
+      state: { topicDescription },
+    });
   };
 
   const {
-    data: topics,
+    data: topicDescriptions,
     isLoading,
     error,
     isError,
-  } = useGetTopicsQuery(sectionId);
+  } = useGetTopicDescriptionByTopicIdQuery(topicId);
 
   if (isLoading) {
     return <Loading />;
@@ -57,16 +60,16 @@ const DisplayTopic = ({ sectionId }) => {
       </Typography>
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-        {topics.map((topic) =>
-          selectedTopic.id === topic.id ? (
-            <EditTopic
-              key={topic.id}
-              topic={topic}
+        {topicDescriptions.map((topicDescription) =>
+          selectedTopicDescription.id === topicDescription.id ? (
+            <EditTopicDescription
+              key={topicDescription.id}
+              topicDescription={topicDescription}
               toggleEditTopic={toggleEditSection}
             />
           ) : (
             <ListItem
-              key={topic.id}
+              key={topicDescription.id}
               sx={{
                 border: "1px solid grey",
                 borderRadius: "5px",
@@ -74,27 +77,15 @@ const DisplayTopic = ({ sectionId }) => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                onClickTopic(topic);
+                onClickTopic(topicDescription);
               }}
             >
-              <ListItemText primary={topic.title} />
-
-              <IconButton
-                sx={{ mr: 1 }}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  navigate(`/${RouteConfig.TOPIC_DESCRIPTION_SCREEN}`, {
-                    state: { topic },
-                  });
-                }}
-              >
-                <TopicIcon />
-              </IconButton>
+              <ListItemText primary={topicDescription.title} />
 
               <IconButton
                 onClick={(event) => {
                   event.stopPropagation();
-                  toggleEditSection(topic);
+                  toggleEditSection(topicDescription);
                 }}
               >
                 <EditSharpIcon />
@@ -107,4 +98,4 @@ const DisplayTopic = ({ sectionId }) => {
   );
 };
 
-export default DisplayTopic;
+export default DisplayTopicDescription;
