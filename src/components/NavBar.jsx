@@ -54,6 +54,7 @@ const NavBar = () => {
           <LinkStyled to={RouteConfig.EXAM_MODEL_SET_SECTION}>
             Exam Model
           </LinkStyled>
+          <LinkStyled to={RouteConfig.IMAGE_SCREEN}>Images</LinkStyled>
           <LinkStyled to={RouteConfig.LOGIN_SCREEN} onClick={handleLogout}>
             Logout
           </LinkStyled>

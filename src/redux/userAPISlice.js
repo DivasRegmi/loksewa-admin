@@ -2,8 +2,8 @@ import { apiSlice } from "./apiSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    findUserByEmail: builder.query({
-      query: (email) => `/api/users/email/${email}`,
+    findUserByPhoneNo: builder.query({
+      query: (phoneNo) => `/api/users/phoneNo/${phoneNo}`,
       providesTags: ["user"],
     }),
 
@@ -20,4 +20,5 @@ export const userApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useLazyFindUserByEmailQuery, useUpdateUserMutation } = userApiSlice;
+export const { useLazyFindUserByPhoneNoQuery, useUpdateUserMutation } =
+  userApiSlice;

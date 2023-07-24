@@ -15,8 +15,8 @@ export const bannerApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Banners"],
     }),
     deleteBanner: builder.mutation({
-      query: (name) => ({
-        url: `/api/banners/${name}`,
+      query: (id) => ({
+        url: `/api/banners/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Banners"],

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { IconButton, List, ListItem, Typography, Box } from "@mui/material";
+import {
+  IconButton,
+  List,
+  ListItem,
+  Typography,
+  Box,
+  Divider,
+} from "@mui/material";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
 
 import ErrorDisplay from "../../components/ErrorDisplay";
@@ -10,6 +17,7 @@ import { useGetQuestionsQuery } from "../../redux/QuestionsAPISlice";
 import EditChoice from "./EditChoice";
 import DisplayImage from "./DisplayImage";
 import MyPagination from "../../components/MyPagination";
+import DisplayQuestionSolution from "./DisplayQuestionSolution";
 
 const DisplayQuestion = ({ topicId }) => {
   const [selectedQuestion, setSelectedQuestion] = useState({ id: -1 });
@@ -102,7 +110,7 @@ const DisplayQuestion = ({ topicId }) => {
               <DisplayImage
                 src={question.image}
                 questionId={question.id}
-                onSuccuss={refetch}
+                onSuccuss={() => refetch()}
               />
 
               <Box
@@ -154,6 +162,13 @@ const DisplayQuestion = ({ topicId }) => {
                   )
                 )}
               </Box>
+              <Divider />
+
+              <DisplayQuestionSolution
+                questionSolution={question.questionSolutionDescription}
+                questionId={question.id}
+                onSuccuss={() => refetch()}
+              />
             </Box>
           </ListItem>
         ))}

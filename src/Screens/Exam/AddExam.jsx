@@ -13,10 +13,12 @@ import { format } from "date-fns";
 
 import AppSnackbar from "../../components/AppSnackbar";
 import { useAddExamMutation } from "../../redux/ExamAPISlice";
+import CategoryDropDown from "../../components/CategoryDropDown";
 
 const AddExam = ({ sectionId }) => {
   const [title, setTitle] = useState("");
   const [examDate, setExamDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [error, setError] = useState(null);
 
   const [addExamMutation, { isError, error: examError, isSuccess, isLoading }] =
@@ -46,12 +48,17 @@ const AddExam = ({ sectionId }) => {
       setError("Title is required");
       return;
     }
+    if (!selectedCategory.toString().trim()) {
+      setError("Category is required");
+      return;
+    }
+
     const body = {
       title,
       examDate: `${examDate}T00:00:00`,
     };
 
-    addExamMutation(body);
+    addExamMutation({ categoryId: selectedCategory, body });
   };
   const handleToday = () => {
     const todayDate = new Date();
@@ -64,6 +71,10 @@ const AddExam = ({ sectionId }) => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     const formattedDate = format(tomorrow, "yyyy-MM-dd");
     setExamDate(formattedDate);
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
 
   return (
@@ -106,6 +117,12 @@ const AddExam = ({ sectionId }) => {
           InputLabelProps={{
             shrink: true,
           }}
+        />
+
+        <CategoryDropDown
+          handleChange={handleCategoryChange}
+          selectedCategory={selectedCategory}
+          disable={false}
         />
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", my: 1 }}>

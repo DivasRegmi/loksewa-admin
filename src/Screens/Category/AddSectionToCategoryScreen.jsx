@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import SectionsDropDown from "../../components/SectionsDropDown";
 import { useGetSectionsByCategoryIdQuery } from "../../redux/sectionAPISlice ";
-import { useAddSectionToCategoryMutation } from "../../redux/categoryAPISlice";
+import {
+  useAddSectionToCategoryMutation,
+  useDeleteBySectionIdMutation,
+} from "../../redux/categoryAPISlice";
 import AppSnackbar from "../../components/AppSnackbar";
+import RouteConfig from "../../config/RouteConfig";
+import SectionsDropDownWithFilter from "../../components/SectionsDropDownWithFilter";
 
 const AddSectionToCategoryScreen = () => {
   const { category } = useLocation().state;
+  const navigate = useNavigate();
 
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedSection, setSelectedSection] = useState("");
   const [error, setError] = useState(null);
 
@@ -32,6 +39,23 @@ const AddSectionToCategoryScreen = () => {
     isError: isErrorGetSection,
     error: errorGetSection,
   } = useGetSectionsByCategoryIdQuery(category.id);
+
+  const [
+    deleteBySectionIdMutation,
+    { isError: isErrorOnDelete, error: errorOnDelete },
+  ] = useDeleteBySectionIdMutation();
+
+  const handleDeleteBySectionId = (sectionId) => {
+    deleteBySectionIdMutation({
+      categoryId: category.id,
+      sectionId: sectionId,
+    });
+  };
+
+  const onPressSectionCard = (sectionId) => {
+    const data = { categoryId: category.id, sectionId: sectionId };
+    navigate(`/${RouteConfig.ADD_TOPIC_TO_CATEGORY_SCREEN}`, { state: data });
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -96,10 +120,11 @@ const AddSectionToCategoryScreen = () => {
 
   return (
     <>
-      <SectionsDropDown
+      <SectionsDropDownWithFilter
         handleChange={handleSectionChange}
         selectedSection={selectedSection}
         disable={false}
+        dataToFilter={sectionData}
       />
       {error && (
         <Typography sx={{ mt: 1 }} variant="subtitle2" color="error">
@@ -133,7 +158,11 @@ const AddSectionToCategoryScreen = () => {
               ml: 2,
               mt: 2,
               position: "relative",
+              cursor: "pointer",
             }}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+            onClick={() => onPressSectionCard(section.id)}
           >
             <Box
               sx={{
@@ -166,6 +195,23 @@ const AddSectionToCategoryScreen = () => {
             >
               {section.title}
             </Typography>
+
+            {hoveredIndex === index && (
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  top: 8,
+                  right: 8,
+                  bgcolor: "white",
+                }}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDeleteBySectionId(section.id);
+                }}
+              >
+                <DeleteIcon color="error" />
+              </IconButton>
+            )}
           </Box>
         ))}
       </Box>
@@ -174,6 +220,13 @@ const AddSectionToCategoryScreen = () => {
         autoHideDuration={4000}
         severity={"success"}
         message={"Section added."}
+      />
+
+      <AppSnackbar
+        isOpen={isErrorOnDelete}
+        autoHideDuration={4000}
+        severity={"error"}
+        message={errorOnDelete ? errorOnDelete.data.message : "Error on delete"}
       />
     </>
   );

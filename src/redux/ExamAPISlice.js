@@ -20,8 +20,8 @@ export const examApiSlice = apiSlice.injectEndpoints({
       providesTags: ["ExamDetails"],
     }),
     addExam: builder.mutation({
-      query: (body) => ({
-        url: `/api/exams`,
+      query: ({ categoryId, body }) => ({
+        url: `/api/exams/category/${categoryId}`,
         method: "POST",
         body: body,
       }),

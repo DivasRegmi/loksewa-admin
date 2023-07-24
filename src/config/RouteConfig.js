@@ -3,9 +3,13 @@ const RouteConfig = {
   REGISTER_SCREEN: "register",
 
   BANNER_SCREEN: "banner-screen",
+  IMAGE_SCREEN: "image-screen",
+  IMAGE_ADD_SCREEN: "image-add-screen",
+  IMAGE_SEARCH_SCREEN: "image-search-screen",
 
   CATEGORY_SCREEN:"categoryscreen",
   ADD_SECTION_TO_CATEGORY_SCREEN:"add-section-category-screen",
+  ADD_TOPIC_TO_CATEGORY_SCREEN:"add-topic-category-screen",
 
   SECTION_SCREEN: "section-screen",
   TOPIC_SCREEN: "topic-screen",

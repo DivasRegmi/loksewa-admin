@@ -10,6 +10,10 @@ import CategoryScreen from "./Screens/Category/CategoryScreen";
 import AddSectionToCategoryScreen from "./Screens/Category/AddSectionToCategoryScreen";
 import TopicDescriptionScreen from "./Screens/TopicDescription/TopicDescriptionScreen";
 import CKEditorTopicDescription from "./Screens/TopicDescription/CKEditorTopicDescription";
+import ImageScreen from "./Screens/Image/ImageScreen";
+import AddImage from "./Screens/Image/Addimage";
+import SearchImages from "./Screens/Image/SearchImages";
+import AddTopicToCategoryScreen from "./Screens/Category/AddTopicToCategoryScreen";
 
 const Home = lazy(() => import("./Screens/Home/Home"));
 const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
@@ -77,6 +81,10 @@ function App() {
               element={<AddSectionToCategoryScreen />}
             />
             <Route
+              path={RouteConfig.ADD_TOPIC_TO_CATEGORY_SCREEN}
+              element={<AddTopicToCategoryScreen />}
+            />
+            <Route
               path={RouteConfig.SECTION_SCREEN}
               element={<SectionScreen />}
             />
@@ -121,6 +129,12 @@ function App() {
             <Route
               path={RouteConfig.EXAM_MODEL_SET}
               element={<ExamModelSetScreen />}
+            />
+            <Route path={RouteConfig.IMAGE_SCREEN} element={<ImageScreen />} />
+            <Route path={RouteConfig.IMAGE_ADD_SCREEN} element={<AddImage />} />
+            <Route
+              path={RouteConfig.IMAGE_SEARCH_SCREEN}
+              element={<SearchImages />}
             />
           </Route>
           <Route path="*" element={<NotFoundPage />} />

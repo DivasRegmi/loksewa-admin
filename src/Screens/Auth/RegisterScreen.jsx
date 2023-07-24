@@ -7,7 +7,7 @@ import { useRegisterMutation } from "../../redux/authAPISlice";
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState(null);
@@ -23,8 +23,8 @@ const RegisterPage = () => {
       setError("Name is required.");
       return;
     }
-    if (!email.trim()) {
-      setError("Email is required.");
+    if (!phoneNo.trim()) {
+      setError("Phone number is required.");
       return;
     }
     if (!password.trim()) {
@@ -36,14 +36,14 @@ const RegisterPage = () => {
       setError("Password must be atleast 6 character.");
       return;
     }
-    const body = { email, password, name };
+    const body = { phoneNo, password, name };
     registerMutation(body);
   };
 
   useEffect(() => {
     if (isSuccess) {
       setName("");
-      setEmail("");
+      setPhoneNo("");
       setPassword("");
       setError("");
     }
@@ -90,11 +90,12 @@ const RegisterPage = () => {
             fullWidth
           />
           <TextField
-            label="Email"
+            label="Phone number"
             variant="outlined"
             margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={phoneNo}
+            type="number"
+            onChange={(e) => setPhoneNo(e.target.value)}
             required
             fullWidth
           />

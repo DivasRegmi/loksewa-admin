@@ -30,6 +30,27 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["SectionByCategorieId"],
     }),
+    addTopicToCategory: builder.mutation({
+      query: ({ categoryId, topicId }) => ({
+        url: `/api/category/${categoryId}/topic/${topicId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["SectionByTopicId"],
+    }),
+    deleteBySectionId: builder.mutation({
+      query: ({ categoryId, sectionId }) => ({
+        url: `/api/category/${categoryId}/sections/${sectionId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["SectionByCategorieId"],
+    }),
+    deleteByTopicId: builder.mutation({
+      query: ({ categoryId, topicId }) => ({
+        url: `/api/category/${categoryId}/topic/${topicId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["SectionByTopicId"],
+    }),
   }),
   overrideExisting: true,
 });
@@ -39,4 +60,7 @@ export const {
   useAddCategoryMutation,
   useUpdateCategoryMutation,
   useAddSectionToCategoryMutation,
+  useAddTopicToCategoryMutation,
+  useDeleteBySectionIdMutation,
+  useDeleteByTopicIdMutation,
 } = categoryApiSlice;

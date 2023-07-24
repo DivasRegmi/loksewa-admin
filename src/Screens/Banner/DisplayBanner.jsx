@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, IconButton,  Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
@@ -17,8 +17,8 @@ const DisplayBanner = () => {
   const [deleteBanner, { isError: isErrorOnDelete, error: errorOnDelete }] =
     useDeleteBannerMutation();
 
-  const handleDeleteBanner = (name) => {
-    deleteBanner(name);
+  const handleDeleteBanner = (id) => {
+    deleteBanner(id);
   };
 
   if (isLoading) {
@@ -62,25 +62,15 @@ const DisplayBanner = () => {
               }}
             >
               <img
-                src={banner.url}
-                alt={banner.name}
+                src={banner.image}
+                alt={banner.tag}
                 style={{
                   width: "100%",
                   height: "auto",
                 }}
               />
             </Box>
-            <Typography
-              variant="h6"
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "normal",
-                textAlign: "center",
-              }}
-            >
-              {banner.name}
-            </Typography>
+
             {hoveredIndex === index && (
               <IconButton
                 sx={{
@@ -89,7 +79,7 @@ const DisplayBanner = () => {
                   right: 8,
                   bgcolor: "white",
                 }}
-                onClick={() => handleDeleteBanner(banner.name)}
+                onClick={() => handleDeleteBanner(banner.id)}
               >
                 <DeleteIcon color="error" />
               </IconButton>

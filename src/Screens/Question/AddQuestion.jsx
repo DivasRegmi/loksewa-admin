@@ -14,7 +14,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import { useAddQuestionMutation } from "../../redux/QuestionsAPISlice";
 import AppSnackbar from "../../components/AppSnackbar";
 import AddQuestionImage from "./AddQuestionImage";
-
+import AddQuestionSolutionDescription from "./AddQuestionSolutionDescription";
 
 const AddQuestion = ({ topicId }) => {
   const [error, setError] = useState(null);
@@ -191,6 +191,10 @@ const AddQuestion = ({ topicId }) => {
           </Typography>
 
           <AddQuestionImage questionId={questionDataOnSuccess.id} />
+          <Divider sx={{ m: 2 }} />
+          <AddQuestionSolutionDescription
+            questionId={questionDataOnSuccess.id}
+          />
         </Box>
       )}
     </>

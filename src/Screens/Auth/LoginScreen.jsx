@@ -9,26 +9,26 @@ import RouteConfig from "../../config/RouteConfig";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const [
     authenticateMutation,
-    { data: user, isError, error: authError, isSuccess, isLoading },
+    { data: user, isError, error: authError, isSuccess },
   ] = useAuthenticateMutation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!email.trim()) {
-      setError("Email is required.");
+    if (!phoneNo.trim()) {
+      setError("Phone Number is required.");
       return;
     }
     if (!password.trim()) {
       setError("Password is required.");
       return;
     }
-    const body = { email, password };
+    const body = { phoneNo, password };
     authenticateMutation(body);
   };
 
@@ -36,7 +36,7 @@ const LoginPage = () => {
     if (isSuccess) {
       dispatch(login(user));
       navigate(`/`);
-      setEmail("");
+      setPhoneNo("");
       setPassword("");
       setError("");
     }
@@ -52,8 +52,8 @@ const LoginPage = () => {
     }
   }, [isError, error]);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handlePhoneNoChange = (e) => {
+    setPhoneNo(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -72,12 +72,12 @@ const LoginPage = () => {
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Email"
-            type="email"
+            label="Phone number"
+            type="number"
             margin="normal"
             fullWidth
-            value={email}
-            onChange={handleEmailChange}
+            value={phoneNo}
+            onChange={handlePhoneNoChange}
             required
           />
           <TextField

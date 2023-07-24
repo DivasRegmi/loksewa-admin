@@ -29,12 +29,18 @@ export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: [
     "Banners",
+    "Images",
+    "Images-tag",
     "Sections",
     "topics",
     "topicDescriptions",
     "allTopics",
+
     "Questions",
     "QuestionsBySearch",
+    "QuestionSolutionDescription",
+
+
     "ExamDetails",
     "Exam",
     "News",
@@ -51,6 +57,7 @@ export const apiSlice = createApi({
 
     "user",
     "SectionByCategorieId",
+    "SectionByTopicId",
     "Category",
   ],
   endpoints: (builder) => ({}),

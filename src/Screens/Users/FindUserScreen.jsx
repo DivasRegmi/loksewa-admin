@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography, TextField, Button, Box } from "@mui/material";
-import { useLazyFindUserByEmailQuery } from "../../redux/userAPISlice";
+import { useLazyFindUserByPhoneNoQuery } from "../../redux/userAPISlice";
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -10,16 +10,16 @@ import RouteConfig from "../../config/RouteConfig";
 const FindUserScreen = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
 
-  const [searchUser, { data, error, isLoading , isError}] =
-    useLazyFindUserByEmailQuery();
+  const [searchUser, { data, error, isLoading, isError }] =
+    useLazyFindUserByPhoneNoQuery();
 
   const handleSearch = () => {
-    if (!email.trim()) {
+    if (!phoneNo.trim()) {
       return;
     }
-    searchUser(email);
+    searchUser(phoneNo);
   };
 
   const handleEditUser = () => {
@@ -54,11 +54,12 @@ const FindUserScreen = () => {
       </Typography>
       <TextField
         sx={{ mt: 2 }}
-        label="Email"
+        label="Phone number"
         fullWidth
         margin="normal"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={phoneNo}
+        type="number"
+        onChange={(e) => setPhoneNo(e.target.value)}
       />
 
       <Button

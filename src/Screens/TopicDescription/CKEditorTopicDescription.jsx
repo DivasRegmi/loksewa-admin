@@ -61,7 +61,7 @@ const CKEditorTopicDescription = () => {
       </Button>
 
       <AppSnackbar
-        isOpen={isSuccess}
+        isOpen={isError}
         autoHideDuration={4000}
         severity={"error"}
         message={error || "Error on update"}
