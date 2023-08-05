@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   IconButton,
   List,
@@ -7,45 +5,46 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
-
+import React, { useState } from "react";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import Loading from "../../components/Loading";
-import EditEventSection from "./EditEventSection";
+import { useNavigate } from "react-router-dom";
 import RouteConfig from "../../config/RouteConfig";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {
-  useDeleteEventSectionMutation,
-  useGetEventSectionsQuery,
-} from "../../redux/eventAPISlice";
-import AppSnackbar from "../../components/AppSnackbar";
+  useDeleteByIdMutation,
+  useGetVacancyListQuery,
+} from "../../redux/vacancyAPISlice";
+import EditVacancy from "./EditVacancy";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
+import AppSnackbar from "../../components/AppSnackbar";
 
-const DisplayEventSection = () => {
+const DisplayVacancy = () => {
   const navigate = useNavigate();
-  const [selectedEventSection, setSelectedEventSection] = useState({ id: -1 });
+  const [selectedVacancy, setSelectedVacancy] = useState({
+    id: -1,
+  });
   const [confirmationOpen, setConfirmationOpen] = useState(false);
-  const [sectionIdToDelete, setSectionIdToDelete] = useState(null);
+  const [vacancyIdToDelete, setVacancyIdToDelete] = useState(null);
+  const toggleEditVacancy = (selectedVacancy) => {
+    setSelectedVacancy(selectedVacancy);
+  };
 
-  const [
-    deleteEventSection,
-    { isError: isErrorOnDelete, error: errorOnDelete },
-  ] = useDeleteEventSectionMutation();
+  const [deleteVacancy, { isError: isErrorOnDelete, error: errorOnDelete }] =
+    useDeleteByIdMutation();
 
-  const handleDeleteEventSection = (id) => {
+  const onClickVacancy = (vacancy) => {
+    navigate(`/${RouteConfig.VACENCY_CK_Editor_SCREEN}`, {
+      state: { vacancy },
+    });
+  };
+
+  const handleDeleteVacancy = (id) => {
     handleConfirmationOpen();
-    setSectionIdToDelete(id);
+    setVacancyIdToDelete(id);
   };
-
-  const toggleEditEventSection = (selectedEventSection) => {
-    setSelectedEventSection(selectedEventSection);
-  };
-
-  const onClickEventSection = (eventSection) => {
-    const data = { eventSection: eventSection };
-    navigate(`/${RouteConfig.EVENT_SCREEN}`, { state: data });
-  };
-
   const handleConfirmationOpen = () => {
     setConfirmationOpen(true);
   };
@@ -54,17 +53,16 @@ const DisplayEventSection = () => {
     setConfirmationOpen(false);
   };
   const handleConfirm = () => {
-    deleteEventSection(sectionIdToDelete);
-    setSectionIdToDelete(null);
+    deleteVacancy(vacancyIdToDelete);
     handleConfirmationClose();
   };
 
   const {
-    data: eventSections,
+    data: vacancies,
     isLoading,
     error,
     isError,
-  } = useGetEventSectionsQuery();
+  } = useGetVacancyListQuery();
 
   if (isLoading) {
     return <Loading />;
@@ -84,20 +82,20 @@ const DisplayEventSection = () => {
   return (
     <>
       <Typography variant="h5" mt={2}>
-        Event Sections
+        Vacancies
       </Typography>
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-        {eventSections.map((eventSection) =>
-          selectedEventSection.id === eventSection.id ? (
-            <EditEventSection
-              key={eventSection.id}
-              eventSection={eventSection}
-              toggleEditEventSection={toggleEditEventSection}
+        {vacancies.map((vacancy) =>
+          selectedVacancy.id === vacancy.id ? (
+            <EditVacancy
+              key={vacancy.id}
+              vacancy={vacancy}
+              toggleEditVacancy={toggleEditVacancy}
             />
           ) : (
             <ListItem
-              key={eventSection.id}
+              key={vacancy.id}
               sx={{
                 border: "1px solid grey",
                 borderRadius: "5px",
@@ -105,29 +103,26 @@ const DisplayEventSection = () => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                onClickEventSection(eventSection);
+                onClickVacancy(vacancy);
               }}
             >
-              <ListItemText primary={eventSection.title} />
+              <ListItemText primary={vacancy.title} />
 
               <IconButton
                 onClick={(event) => {
                   event.stopPropagation();
-                  toggleEditEventSection(eventSection);
+                  toggleEditVacancy(vacancy);
                 }}
               >
                 <EditSharpIcon />
               </IconButton>
               <IconButton
-                sx={{
-                  ml: 1,
-                }}
                 onClick={(event) => {
                   event.stopPropagation();
-                  handleDeleteEventSection(eventSection.id);
+                  handleDeleteVacancy(vacancy.id);
                 }}
               >
-                <DeleteIcon color="error" />
+                <DeleteIcon color="red" />
               </IconButton>
             </ListItem>
           )
@@ -140,6 +135,7 @@ const DisplayEventSection = () => {
         handleClose={handleConfirmationClose}
         handleConfirm={handleConfirm}
       />
+
       <AppSnackbar
         isOpen={isErrorOnDelete}
         autoHideDuration={4000}
@@ -150,4 +146,4 @@ const DisplayEventSection = () => {
   );
 };
 
-export default DisplayEventSection;
+export default DisplayVacancy;

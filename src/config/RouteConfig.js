@@ -20,11 +20,8 @@ const RouteConfig = {
   SEARCH_QUESTION: "search-question",
   QUESTION_REPORT: "question-report",
 
-  NEWS_SECTION_SCREEN: "news-section-screen",
-  NEWS_SCREEN: "news-screen",
-
-  EVENT_SECTION_SCREEN: "event-section-screen",
-  EVENT_SCREEN: "events-creen",
+  VACENCY_SCREEN: "vacency-screen",
+  VACENCY_CK_Editor_SCREEN: "vacency-edit",
 
   EXAM_SCREEN: "exams-creen",
   EXAM_DETAILS: "exam-details",

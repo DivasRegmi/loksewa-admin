@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-
+import storage from "redux-persist/lib/storage";
 import userReducer from "./userSlice";
 import { apiSlice } from "./apiSlice";
 

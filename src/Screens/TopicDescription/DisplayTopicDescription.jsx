@@ -11,8 +11,14 @@ import ErrorDisplay from "../../components/ErrorDisplay";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
 import RouteConfig from "../../config/RouteConfig";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
+import AppSnackbar from "../../components/AppSnackbar";
 
-import { useGetTopicDescriptionByTopicIdQuery } from "../../redux/topicDescriptionAPISlice";
+import {
+  useGetTopicDescriptionByTopicIdQuery,
+  useDeleteByTopicDescriptionIdMutation,
+} from "../../redux/topicDescriptionAPISlice";
 import EditTopicDescription from "./EditTopicDescription";
 
 const DisplayTopicDescription = ({ topicId }) => {
@@ -20,6 +26,9 @@ const DisplayTopicDescription = ({ topicId }) => {
   const [selectedTopicDescription, setSelectedTopicDescription] = useState({
     id: -1,
   });
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [topicDescriptionIdToDelete, setTopicDescriptionIdToDelete] =
+    useState(null);
 
   const toggleEditSection = (selectedTopicDescription) => {
     setSelectedTopicDescription(selectedTopicDescription);
@@ -29,6 +38,26 @@ const DisplayTopicDescription = ({ topicId }) => {
     navigate(`/${RouteConfig.TOPIC_DESCRIPTION_CK_Editor_SCREEN}`, {
       state: { topicDescription },
     });
+  };
+  const [
+    deleteTopicDescription,
+    { isError: isErrorOnDelete, error: errorOnDelete },
+  ] = useDeleteByTopicDescriptionIdMutation();
+
+  const handleDeleteTopicDescription = (id) => {
+    handleConfirmationOpen();
+    setTopicDescriptionIdToDelete(id);
+  };
+  const handleConfirmationOpen = () => {
+    setConfirmationOpen(true);
+  };
+
+  const handleConfirmationClose = () => {
+    setConfirmationOpen(false);
+  };
+  const handleConfirm = () => {
+    deleteTopicDescription(topicDescriptionIdToDelete);
+    handleConfirmationClose();
   };
 
   const {
@@ -90,10 +119,33 @@ const DisplayTopicDescription = ({ topicId }) => {
               >
                 <EditSharpIcon />
               </IconButton>
+              <IconButton
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDeleteTopicDescription(topicDescription.id);
+                }}
+              >
+                <DeleteIcon color="red" />
+              </IconButton>
             </ListItem>
           )
         )}
       </List>
+
+      <ConfirmationDialog
+        title={"Confirm Delete"}
+        description={"Are you sure you want to delete this item?"}
+        open={confirmationOpen}
+        handleClose={handleConfirmationClose}
+        handleConfirm={handleConfirm}
+      />
+
+      <AppSnackbar
+        isOpen={isErrorOnDelete}
+        autoHideDuration={4000}
+        severity={"error"}
+        message={errorOnDelete ? errorOnDelete.data.message : "Error on delete"}
+      />
     </>
   );
 };

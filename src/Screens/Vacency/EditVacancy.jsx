@@ -10,29 +10,29 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { Add as AddIcon } from "@mui/icons-material";
 
-import { useUpdateEventSectionMutation } from "../../redux/eventAPISlice";
+import { useUpdateVacancyMutation } from "../../redux/vacancyAPISlice";
 
-const EditEventSection = ({ eventSection, toggleEditEventSection }) => {
-  const [title, setTitle] = useState(eventSection.title);
+const EditVacancy = ({ vacancy, toggleEditVacancy }) => {
+  const [title, setTitle] = useState(vacancy.title);
   const [error, setError] = useState(null);
 
   const [
-    updateEventSectionMutation,
-    { isError, error: eventSectionError, isSuccess, isLoading },
-  ] = useUpdateEventSectionMutation();
+    updateVacancyMutation,
+    { isError, error: vacancyError, isSuccess, isLoading },
+  ] = useUpdateVacancyMutation();
 
   useEffect(() => {
     if (isSuccess) {
       setTitle("");
       setError(null);
-      toggleEditEventSection({ id: -1 });
+      toggleEditVacancy({ id: -1 });
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      if (eventSectionError && eventSectionError.data) {
-        setError(eventSectionError.data.message);
+      if (vacancyError && vacancyError.data) {
+        setError(vacancyError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");
       }
@@ -47,7 +47,10 @@ const EditEventSection = ({ eventSection, toggleEditEventSection }) => {
       return;
     }
 
-    updateEventSectionMutation({ eventSectionId: eventSection.id, title: title });
+    updateVacancyMutation({
+      vacancyId: vacancy.id,
+      body: { title },
+    });
   };
 
   return (
@@ -68,7 +71,7 @@ const EditEventSection = ({ eventSection, toggleEditEventSection }) => {
               <InputAdornment position="end">
                 <IconButton
                   onClick={() => {
-                    toggleEditEventSection({ id: -1 });
+                    toggleEditVacancy({ id: -1 });
                   }}
                 >
                   <CloseIcon />
@@ -90,9 +93,8 @@ const EditEventSection = ({ eventSection, toggleEditEventSection }) => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
-          startIcon={<AddIcon />}
           disabled={isLoading}
-
+          startIcon={<AddIcon />}
         >
           {isLoading ? "Updating..." : "Update"}
         </Button>
@@ -101,4 +103,4 @@ const EditEventSection = ({ eventSection, toggleEditEventSection }) => {
   );
 };
 
-export default EditEventSection;
+export default EditVacancy;

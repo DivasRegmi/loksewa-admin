@@ -3,25 +3,25 @@ import { useLocation } from "react-router-dom";
 
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { useUpdateTopicDescriptionMutation } from "../../redux/topicDescriptionAPISlice";
+import { useUpdateVacancyMutation } from "../../redux/vacancyAPISlice";
 import AppSnackbar from "../../components/AppSnackbar";
 import { Button } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
-const CKEditorTopicDescription = () => {
-  const { topicDescription } = useLocation().state;
-  const [description, setDescription] = useState(topicDescription.description);
+const CKEditorVacancy = () => {
+  const { vacancy } = useLocation().state;
+  const [description, setDescription] = useState(vacancy.description);
   const [error, setError] = useState(null);
 
   const [
-    updateTopicMutation,
-    { isError, error: topicError, isSuccess, isLoading },
-  ] = useUpdateTopicDescriptionMutation();
+    updateVacancyMutation,
+    { isError, error: vacancyError, isSuccess, isLoading },
+  ] = useUpdateVacancyMutation();
 
   useEffect(() => {
     if (isError) {
-      if (topicError && topicError.data) {
-        setError(topicError.data.message);
+      if (vacancyError && vacancyError.data) {
+        setError(vacancyError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");
       }
@@ -31,8 +31,8 @@ const CKEditorTopicDescription = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateTopicMutation({
-      topicDescriptionId: topicDescription.id,
+    updateVacancyMutation({
+      vacancyId: vacancy.id,
       body: { description },
     });
   };
@@ -41,7 +41,7 @@ const CKEditorTopicDescription = () => {
     <div>
       <CKEditor
         editor={Editor}
-        data={topicDescription.description}
+        data={vacancy.description}
         onChange={(event, editor) => {
           const data = editor.getData();
           setDescription(data);
@@ -76,4 +76,4 @@ const CKEditorTopicDescription = () => {
   );
 };
 
-export default CKEditorTopicDescription;
+export default CKEditorVacancy;

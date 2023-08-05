@@ -25,7 +25,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 };
 
 export const apiSlice = createApi({
-  reducerPath: "api", // optional
+  reducerPath: "api", 
   baseQuery: baseQueryWithReauth,
   tagTypes: [
     "Banners",

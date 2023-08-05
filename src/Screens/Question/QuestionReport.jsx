@@ -134,7 +134,9 @@ const QuestionReport = () => {
 
       <Divider sx={{ my: 2 }} />
 
-      <Typography variant="h5" sx={{ my: 2 }}>Reports</Typography>
+      <Typography variant="h5" sx={{ my: 2 }}>
+        Reports
+      </Typography>
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {reports.content.map((question) => (
@@ -225,19 +227,25 @@ const QuestionReport = () => {
                   )
                 )}
               </Box>
-              <Box
+              <Typography style={{ mb: 2 }}>
+                Report numbers: {question.reportCount}
+              </Typography>
+              <Typography
+                variant="subtitle1"
                 sx={{
-                  p: 1,
-                  my: 2,
-                  border: "1px solid grey",
-                  borderRadius: "5px",
-                  backgroundColor: "#f26658",
-                  marginLeft: "auto",
-                  width: "150px",
+                  display: "inline-block",
+                  px: 2,
+                  py: 0.5,
+                  mb: 2,
+                  borderRadius: 2,
+                  backgroundColor: "#0099ff",
+                  color: "#fff",
                 }}
               >
-                <Typography>Report numbers: {question.reportCount}</Typography>
-              </Box>
+                {question.topic.title}
+              </Typography>
+
+              <br />
               <Button
                 sx={{ ml: "auto" }}
                 variant="contained"

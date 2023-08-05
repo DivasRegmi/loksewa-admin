@@ -46,8 +46,7 @@ const NavBar = () => {
           <LinkStyled to={RouteConfig.BANNER_SCREEN}>Banner</LinkStyled>
           <LinkStyled to={RouteConfig.CATEGORY_SCREEN}>Category</LinkStyled>
           <LinkStyled to={RouteConfig.SECTION_SCREEN}>Sections</LinkStyled>
-          <LinkStyled to={RouteConfig.EVENT_SECTION_SCREEN}>Event</LinkStyled>
-          <LinkStyled to={RouteConfig.NEWS_SECTION_SCREEN}>News</LinkStyled>
+          <LinkStyled to={RouteConfig.VACENCY_SCREEN}>Vacency</LinkStyled>
           <LinkStyled to={RouteConfig.SEARCH_QUESTION}>Question</LinkStyled>
           <LinkStyled to={RouteConfig.QUESTION_REPORT}>Report</LinkStyled>
           <LinkStyled to={RouteConfig.EXAM_SCREEN}>Exam</LinkStyled>

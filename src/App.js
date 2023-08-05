@@ -6,28 +6,12 @@ import Layout from "./components/Layout";
 import NotFoundPage from "./components/NotFoundPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import SuspenseRoutes from "./components/SuspenseRoutes";
-import CategoryScreen from "./Screens/Category/CategoryScreen";
-import AddSectionToCategoryScreen from "./Screens/Category/AddSectionToCategoryScreen";
-import TopicDescriptionScreen from "./Screens/TopicDescription/TopicDescriptionScreen";
-import CKEditorTopicDescription from "./Screens/TopicDescription/CKEditorTopicDescription";
-import ImageScreen from "./Screens/Image/ImageScreen";
-import AddImage from "./Screens/Image/Addimage";
-import SearchImages from "./Screens/Image/SearchImages";
-import AddTopicToCategoryScreen from "./Screens/Category/AddTopicToCategoryScreen";
 
 const Home = lazy(() => import("./Screens/Home/Home"));
 const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
 const SectionScreen = lazy(() => import("./Screens/Section/SectionScreen"));
 const TopicScreen = lazy(() => import("./Screens/Topic/TopicScreen"));
 const QuestionScreen = lazy(() => import("./Screens/Question/QuestionScreen"));
-const NewsSectionScreen = lazy(() =>
-  import("./Screens/NewsSection/NewsSectionScreen")
-);
-const EventSectionScreen = lazy(() =>
-  import("./Screens/EventSection/EventSectionScreen")
-);
-const NewsScreen = lazy(() => import("./Screens/News/NewsScreen"));
-const EventScreen = lazy(() => import("./Screens/Event/EventScreen"));
 const SearchQuestion = lazy(() => import("./Screens/Question/SearchQuestion"));
 const QuestionReport = lazy(() => import("./Screens/Question/QuestionReport"));
 const ExamScreen = lazy(() => import("./Screens/Exam/ExamScreen"));
@@ -46,6 +30,25 @@ const EditUser = lazy(() => import("./Screens/Users/EditUser"));
 const DisplayPaymentByUserId = lazy(() =>
   import("./Screens/Payment/DisplayPaymentByUserId")
 );
+
+const CategoryScreen = lazy(() => import("./Screens/Category/CategoryScreen"));
+const AddSectionToCategoryScreen = lazy(() =>
+  import("./Screens/Category/AddSectionToCategoryScreen")
+);
+const TopicDescriptionScreen = lazy(() =>
+  import("./Screens/TopicDescription/TopicDescriptionScreen")
+);
+const CKEditorTopicDescription = lazy(() =>
+  import("./Screens/TopicDescription/CKEditorTopicDescription")
+);
+const ImageScreen = lazy(() => import("./Screens/Image/ImageScreen"));
+const AddImage = lazy(() => import("./Screens/Image/Addimage"));
+const SearchImages = lazy(() => import("./Screens/Image/SearchImages"));
+const AddTopicToCategoryScreen = lazy(() =>
+  import("./Screens/Category/AddTopicToCategoryScreen")
+);
+const VacancyScreen = lazy(() => import("./Screens/Vacency/VacancyScreen"));
+const CKEditorVacancy = lazy(() => import("./Screens/Vacency/CKEditorVacancy"));
 
 function App() {
   return (
@@ -99,16 +102,6 @@ function App() {
             />
 
             <Route
-              path={RouteConfig.NEWS_SECTION_SCREEN}
-              element={<NewsSectionScreen />}
-            />
-            <Route path={RouteConfig.NEWS_SCREEN} element={<NewsScreen />} />
-            <Route path={RouteConfig.EVENT_SCREEN} element={<EventScreen />} />
-            <Route
-              path={RouteConfig.EVENT_SECTION_SCREEN}
-              element={<EventSectionScreen />}
-            />
-            <Route
               path={RouteConfig.QUESTION_SCREEN}
               element={<QuestionScreen />}
             />
@@ -135,6 +128,14 @@ function App() {
             <Route
               path={RouteConfig.IMAGE_SEARCH_SCREEN}
               element={<SearchImages />}
+            />
+            <Route
+              path={RouteConfig.VACENCY_SCREEN}
+              element={<VacancyScreen />}
+            />
+            <Route
+              path={RouteConfig.VACENCY_CK_Editor_SCREEN}
+              element={<CKEditorVacancy />}
             />
           </Route>
           <Route path="*" element={<NotFoundPage />} />

@@ -3,16 +3,14 @@ import { Button, FormControl, TextField, Typography } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
 import AppSnackbar from "../../components/AppSnackbar";
-import { useAddEventSectionMutation } from "../../redux/eventAPISlice";
+import { useAddVacancyMutation } from "../../redux/vacancyAPISlice";
 
-const AddEventSection = () => {
+const AddVacancy = () => {
   const [title, setTitle] = useState("");
   const [error, setError] = useState(null);
 
-  const [
-    addEventSectionMutation,
-    { isError, error: eventSectionError, isSuccess, isLoading },
-  ] = useAddEventSectionMutation();
+  const [AddVacancy, { isError, error: vacancyError, isSuccess, isLoading }] =
+    useAddVacancyMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -23,8 +21,8 @@ const AddEventSection = () => {
 
   useEffect(() => {
     if (isError) {
-      if (eventSectionError && eventSectionError.data) {
-        setError(eventSectionError.data.message);
+      if (vacancyError && vacancyError.data) {
+        setError(vacancyError.data.message);
       } else {
         setError("Something went wrong. Please try again later.");
       }
@@ -39,13 +37,13 @@ const AddEventSection = () => {
       return;
     }
 
-    addEventSectionMutation(title);
+    AddVacancy({ title });
   };
 
   return (
     <>
       <Typography variant="h5" mt={2}>
-        Add EventSection
+        Add Vacancy
       </Typography>
 
       <FormControl fullWidth margin="normal" variant="outlined">
@@ -73,10 +71,10 @@ const AddEventSection = () => {
           color="primary"
           onClick={handleSubmit}
           sx={{ mt: 1 }}
-          disabled={isLoading}
           startIcon={<AddIcon />}
+          disabled={isLoading}
         >
-          {isLoading ? "Adding..." : "Add Event Section"}
+          {isLoading ? "Creating..." : "Add Vacancy"}
         </Button>
       </FormControl>
 
@@ -84,10 +82,10 @@ const AddEventSection = () => {
         isOpen={isSuccess}
         autoHideDuration={4000}
         severity={"success"}
-        message={"EventSection Created"}
+        message={"Vacancy Created"}
       />
     </>
   );
 };
 
-export default AddEventSection;
+export default AddVacancy;
