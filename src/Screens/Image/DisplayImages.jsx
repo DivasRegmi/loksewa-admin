@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
@@ -22,7 +21,7 @@ const DisplayImages = () => {
 
   const [
     deleteImageMutation,
-    { isError: isErrorOnDelete, error: errorOnDelete, isSuccess },
+    { isError: isErrorOnDelete, error: errorOnDelete },
   ] = useDeleteImageMutation();
 
   const {

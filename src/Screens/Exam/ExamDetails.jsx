@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Typography, Button, List, Box, ListItem } from "@mui/material";
+import {
+  Typography,
+  Button,
+  List,
+  Box,
+  ListItem,
+} from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
 import {
@@ -11,6 +17,7 @@ import ExamModelSetSectionDropDown from "../../components/ExamModelSetSectionDro
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import MyPagination from "../../components/MyPagination";
+import AddQuestionFromExam from "./AddQuestionFromExam";
 
 const ExamDetails = () => {
   const { exam } = useLocation().state;
@@ -120,6 +127,8 @@ const ExamDetails = () => {
       >
         {isLoadingAddQuestion ? "Adding..." : "Add Questions"}
       </Button>
+
+      <AddQuestionFromExam />
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {questions.content.map((question) => (

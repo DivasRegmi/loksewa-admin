@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import AddQuestion from "./AddQuestion";
 import DisplayQuestion from "./DisplayQuestion";

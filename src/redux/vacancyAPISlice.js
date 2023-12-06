@@ -1,6 +1,6 @@
 import { apiSlice } from "./apiSlice";
 
-export const topicDescriptionAPISlice = apiSlice.injectEndpoints({
+export const vacancyAPISlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getVacancyList: builder.query({
       query: () => `/api/vacancies`,
@@ -38,4 +38,4 @@ useGetVacancyListQuery,
 useAddVacancyMutation,
 useUpdateVacancyMutation,
 useDeleteByIdMutation
-} = topicDescriptionAPISlice;
+} = vacancyAPISlice;

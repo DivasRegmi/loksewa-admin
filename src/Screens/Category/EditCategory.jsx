@@ -11,7 +11,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import AppSnackbar from "../../components/AppSnackbar";
 import { useUpdateCategoryMutation } from "../../redux/categoryAPISlice";
 
-const types = ["GK", "IQ", "ENGLISH"];
+// const types = ["GK", "IQ", "ENGLISH"];
 const EditCategory = ({ category, toggleEditCategory }) => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
 

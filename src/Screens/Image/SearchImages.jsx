@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Box, Divider, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Divider, IconButton, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
@@ -11,7 +10,6 @@ import {
   useDeleteImageMutation,
 } from "../../redux/imageAPISlice";
 
-import MyPagination from "../../components/MyPagination";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import AppSnackbar from "../../components/AppSnackbar";
 
@@ -23,7 +21,7 @@ const SearchImages = () => {
 
   const [
     deleteImageMutation,
-    { isError: isErrorOnDelete, error: errorOnDelete, isSuccess },
+    { isError: isErrorOnDelete, error: errorOnDelete },
   ] = useDeleteImageMutation();
 
   const {

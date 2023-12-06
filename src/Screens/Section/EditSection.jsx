@@ -14,7 +14,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import AppSnackbar from "../../components/AppSnackbar";
 import { useUpdateSectionMutation } from "../../redux/sectionAPISlice ";
 
-const types = ["GK", "IQ", "ENGLISH"];
+const types = ["GK", "IQ", "ENGLISH", "GORKHAPATRA"];
 const EditSection = ({ section, toggleEditSection }) => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
 
