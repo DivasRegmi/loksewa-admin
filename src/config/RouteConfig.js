@@ -28,6 +28,7 @@ const RouteConfig = {
 
   EXAM_MODEL_SET_SECTION: "exam-model-set-section-screen",
   EXAM_MODEL_SET: "exam-model-set-screen",
+  EXAM_MANUAL_QUESTION_ADD_SCREEN:"exam-manual-add-question-screen",
 
   PAYMENT: "payment",
   PAYMENT_BY_USER_ID: "payment-by-id",

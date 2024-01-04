@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import NotFoundPage from "./components/NotFoundPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import SuspenseRoutes from "./components/SuspenseRoutes";
+import AddQuestionsManuallyScreen from "./Screens/Exam/AddQuestionsManuallyScreen";
 
 const Home = lazy(() => import("./Screens/Home/Home"));
 const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
@@ -115,6 +116,10 @@ function App() {
             />
             <Route path={RouteConfig.EXAM_SCREEN} element={<ExamScreen />} />
             <Route path={RouteConfig.EXAM_DETAILS} element={<ExamDetails />} />
+            <Route
+              path={RouteConfig.EXAM_MANUAL_QUESTION_ADD_SCREEN}
+              element={<AddQuestionsManuallyScreen />}
+            />
             <Route
               path={RouteConfig.EXAM_MODEL_SET_SECTION}
               element={<ExamModelSetSectionScreen />}

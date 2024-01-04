@@ -1,10 +1,10 @@
 import React from 'react'
 import AddQuestion from '../Question/AddQuestion'
 
-const AddQuestionFromExam = () => {
+const AddQuestionFromExam = ({topicId}) => {
   return (
     <div>
-      <AddQuestion topicId={1}/>
+      <AddQuestion topicId={topicId}/>
     </div>
   )
 }

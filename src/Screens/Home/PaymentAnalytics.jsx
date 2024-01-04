@@ -41,10 +41,10 @@ const PaymentAnalytics = () => {
           Total Amount by Last 6 Months:
         </Typography>
         <ul>
-          {totalAmountByLast6Months.map(([month, amount]) => (
+          {totalAmountByLast6Months.map(([month, amount, user]) => (
             <li key={month}>
               <Typography>
-                <strong>Month {month}:</strong> Rs {amount}
+                <strong>Month {month}:</strong> Rs {amount} : {user} user
               </Typography>
             </li>
           ))}

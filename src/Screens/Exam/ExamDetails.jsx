@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
   Button,
   List,
   Box,
   ListItem,
+  Divider,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
@@ -18,9 +19,11 @@ import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import MyPagination from "../../components/MyPagination";
 import AddQuestionFromExam from "./AddQuestionFromExam";
+import RouteConfig from "../../config/RouteConfig";
 
 const ExamDetails = () => {
   const { exam } = useLocation().state;
+  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = useState("");
   const [pageNo, setPageNo] = useState(0);
   const handleSectionChange = (event) => {
@@ -98,11 +101,23 @@ const ExamDetails = () => {
     return <ErrorDisplay message={errMsg} />;
   }
 
+  const onPressAddManually = () => {
+    const data = { exam: exam };
+
+    navigate(`/${RouteConfig.EXAM_MANUAL_QUESTION_ADD_SCREEN}`, {
+      state: data,
+    });
+  };
+
   return (
     <>
       <Typography variant="h4" sx={{ textAlign: "center" }}>
         {exam.title}
       </Typography>
+
+      <Button variant="outlined" onClick={onPressAddManually}>
+        Add Manually
+      </Button>
 
       <ExamModelSetSectionDropDown
         selectedSection={selectedSection}
@@ -127,8 +142,6 @@ const ExamDetails = () => {
       >
         {isLoadingAddQuestion ? "Adding..." : "Add Questions"}
       </Button>
-
-      <AddQuestionFromExam />
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {questions.content.map((question) => (

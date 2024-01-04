@@ -27,7 +27,7 @@ import MyPagination from "../../components/MyPagination";
 
 const weekBeforeDate = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000);
 const yearAfterDate = new Date(
-  new Date().getFullYear() + 1,
+  new Date().getFullYear() + 100,
   new Date().getMonth(),
   new Date().getDate()
 );
