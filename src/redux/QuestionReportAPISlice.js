@@ -11,6 +11,7 @@ export const questionsReportApiSlice = apiSlice.injectEndpoints({
         args.pageSize +
         "&report=" +
         args.report,
+      providesTags: ["Questions"],
     }),
 
     deleteQuestionReport: builder.mutation({
@@ -23,7 +24,5 @@ export const questionsReportApiSlice = apiSlice.injectEndpoints({
   overrideExisting: true,
 });
 
-export const {
-  useGetQuestionsReportQuery,
-  useDeleteQuestionReportMutation,
-} = questionsReportApiSlice;
+export const { useGetQuestionsReportQuery, useDeleteQuestionReportMutation } =
+  questionsReportApiSlice;

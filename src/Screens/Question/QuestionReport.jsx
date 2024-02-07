@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
@@ -28,6 +29,7 @@ import AppSnackbar from "../../components/AppSnackbar";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import MyPagination from "../../components/MyPagination";
 import DisplayQuestionSolution from "./DisplayQuestionSolution";
+import { useDeleteQuestionMutation } from "../../redux/QuestionsAPISlice";
 
 const reportOptions = [
   "QUESTION_NOT_UPDATED",
@@ -43,6 +45,11 @@ const QuestionReport = () => {
   const [sectionIdToDelete, setSectionIdToDelete] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [pageNo, setPageNo] = useState(0);
+
+  const [questionIdToDelete, setQuestionIdToDelete] = useState(null);
+
+  const [deleteQuestionConfirmationOpen, setDeleteQuestionConfirmationOpen] =
+    useState(false);
 
   const toggleEditQuestion = (selectedQuestion) => {
     setSelectedQuestion(selectedQuestion);
@@ -98,6 +105,30 @@ const QuestionReport = () => {
       refetch();
     }
   }, [isSuccessDelete, refetch]);
+
+  const [
+    deleteQuestion,
+    { isError: isErrorOnDeleteQuestion, error: errorOnDeleteQuestion },
+  ] = useDeleteQuestionMutation();
+
+  const handleDeleteQuestion = (id) => {
+    setQuestionIdToDelete(id);
+    handleDeleteQuestionConfirmationOpen();
+  };
+
+  const handleDeleteQuestionConfirmationOpen = () => {
+    setDeleteQuestionConfirmationOpen(true);
+  };
+
+  const handleDeleteQuestionConfirmationClose = () => {
+    setDeleteQuestionConfirmationOpen(false);
+  };
+
+  const handleConfirmDeleteQuestion = () => {
+    deleteQuestion(questionIdToDelete);
+    setQuestionIdToDelete(null);
+    handleDeleteQuestionConfirmationClose();
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -195,23 +226,34 @@ const QuestionReport = () => {
                   sx={{
                     wordWrap: "break-word",
                     textAlign: "justify",
-                    mt:1
-
+                    mt: 1,
                   }}
                 >
+                  {question.id + ") "}
                   {question.question}
                 </Typography>
               )}
               {selectedQuestion.id === -1 && (
-                <IconButton
-                  sx={{ position: "absolute", top: 0, right: 8 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleEditQuestion(question);
-                  }}
-                >
-                  <EditSharpIcon />
-                </IconButton>
+                <>
+                  <Box sx={{ position: "absolute", top: 0, right: 8 }}>
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleEditQuestion(question);
+                      }}
+                    >
+                      <EditSharpIcon />
+                    </IconButton>
+
+                    <IconButton
+                      onClick={(e) => {
+                        handleDeleteQuestion(question.id);
+                      }}
+                    >
+                      <DeleteIcon color="#CE2029" />
+                    </IconButton>
+                  </Box>
+                </>
               )}
 
               <DisplayImage
@@ -317,12 +359,34 @@ const QuestionReport = () => {
                 handleClose={handleConfirmationClose}
                 handleConfirm={handleConfirm}
               />
+
+              <ConfirmationDialog
+                title={"Confirm Delete"}
+                description={"Are you sure you want to delete this question?"}
+                open={deleteQuestionConfirmationOpen}
+                handleClose={handleDeleteQuestionConfirmationClose}
+                handleConfirm={handleConfirmDeleteQuestion}
+              />
+
               <AppSnackbar
                 isOpen={isErrorOnDelete}
                 autoHideDuration={4000}
                 severity={"error"}
                 message={
-                  errorOnDelete ? errorOnDelete.data.message : "Error on delete"
+                  errorOnDelete
+                    ? errorOnDelete.data.message
+                    : "Error on delete Report"
+                }
+              />
+
+              <AppSnackbar
+                isOpen={isErrorOnDeleteQuestion}
+                autoHideDuration={4000}
+                severity={"error"}
+                message={
+                  errorOnDeleteQuestion
+                    ? errorOnDeleteQuestion.data.message
+                    : "Error on delete Question"
                 }
               />
             </Box>

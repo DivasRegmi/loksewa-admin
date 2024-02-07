@@ -23,6 +23,7 @@ import DisplayImage from "./DisplayImage";
 import MyPagination from "../../components/MyPagination";
 import DisplayQuestionSolution from "./DisplayQuestionSolution";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
+import AppSnackbar from "../../components/AppSnackbar";
 
 const DisplayQuestion = ({ topicId }) => {
   const [selectedQuestion, setSelectedQuestion] = useState({ id: -1 });
@@ -56,8 +57,10 @@ const DisplayQuestion = ({ topicId }) => {
     choices: true,
   });
 
-  const [deleteQuestion, { isError: isErrorOnDelete, error: errorOnDelete }] =
-    useDeleteQuestionMutation();
+  const [
+    deleteQuestion,
+    { isError: isErrorOnDeleteQuestion, error: errorOnDeleteQuestion },
+  ] = useDeleteQuestionMutation();
 
   const handleDeleteQuestion = (id) => {
     setQuestionIdToDelete(id);
@@ -75,23 +78,17 @@ const DisplayQuestion = ({ topicId }) => {
   const handleConfirmDeleteQuestion = () => {
     deleteQuestion(questionIdToDelete);
     setQuestionIdToDelete(null);
-    handleDeleteQuestionConfirmationClose()
+    handleDeleteQuestionConfirmationClose();
   };
 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (isError || isErrorOnDelete) {
+  if (isError ) {
     let errMsg;
     if (error && error.data && error.data.message) {
       errMsg = error.data.message;
-    } else if (
-      errorOnDelete &&
-      errorOnDelete.data &&
-      errorOnDelete.data.message
-    ) {
-      errMsg = errorOnDelete.data.message;
     } else {
       errMsg = "Something went wrong. Please try again later.";
     }
@@ -238,6 +235,17 @@ const DisplayQuestion = ({ topicId }) => {
         open={deleteQuestionConfirmationOpen}
         handleClose={handleDeleteQuestionConfirmationClose}
         handleConfirm={handleConfirmDeleteQuestion}
+      />
+
+      <AppSnackbar
+        isOpen={isErrorOnDeleteQuestion}
+        autoHideDuration={4000}
+        severity={"error"}
+        message={
+          errorOnDeleteQuestion
+            ? errorOnDeleteQuestion.data.message
+            : "Error on delete Question"
+        }
       />
     </>
   );
