@@ -45,15 +45,20 @@ const DisplayQuestionSolution = ({
   };
 
   return (
-    <>
+    <Box>
       {questionSolution != null ? (
         <Box
           p={2}
-          sx={{ position: "relative" }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(null)}
+          sx={{
+            position: "relative",
+            borderRadius: 5,
+            backgroundColor: "#fafafa",
+            m: 2,
+          }}
         >
-          <Typography variant="h5" sx={{ m: 2, ml: 0, pl: 0 }}>
+          <Typography variant="h6" sx={{ m: 2, ml: 0, pl: 0 }}>
             Solution
           </Typography>
           {questionSolution.image && (
@@ -132,7 +137,7 @@ const DisplayQuestionSolution = ({
         severity={"error"}
         message={errorOnDelete ? errorOnDelete.data.message : "Error on delete"}
       />
-    </>
+    </Box>
   );
 };
 

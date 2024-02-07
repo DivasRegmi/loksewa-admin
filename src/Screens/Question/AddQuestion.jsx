@@ -16,7 +16,7 @@ import AppSnackbar from "../../components/AppSnackbar";
 import AddQuestionImage from "./AddQuestionImage";
 import AddQuestionSolutionDescription from "./AddQuestionSolutionDescription";
 
-const AddQuestion = ({ topicId }) => {
+const AddQuestion = ({ topicId, handleAddQuestionToExam }) => {
   const [error, setError] = useState(null);
   const [question, setQuestion] = useState("");
   const [choices, setChoices] = useState([
@@ -47,6 +47,10 @@ const AddQuestion = ({ topicId }) => {
         { choice: "", rightChoice: false },
       ]);
       setError(null);
+      if (typeof handleAddQuestionToExam === "function") {
+        const updatedQuestionId = questionDataOnSuccess.id;
+        handleAddQuestionToExam(updatedQuestionId);
+      }
     }
   }, [isSuccess]);
 

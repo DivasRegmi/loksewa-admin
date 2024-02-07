@@ -14,7 +14,16 @@ import { Add as AddIcon } from "@mui/icons-material";
 import AppSnackbar from "../../components/AppSnackbar";
 import { useUpdateSectionMutation } from "../../redux/sectionAPISlice ";
 
-const types = ["GK", "IQ", "ENGLISH", "GORKHAPATRA"];
+const types = [
+  "GK",
+  "IQ",
+  "ENGLISH",
+  "GORKHAPATRA",
+  "PUBLIC_MANAGEMENT",
+  "BANKING",
+  "OTHERS",
+];
+
 const EditSection = ({ section, toggleEditSection }) => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
 
@@ -53,7 +62,7 @@ const EditSection = ({ section, toggleEditSection }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = {};
-    const { title, image , type} = formData;
+    const { title, image, type } = formData;
     if (!title.trim()) {
       errors.title = "Title is required";
     }
@@ -130,10 +139,8 @@ const EditSection = ({ section, toggleEditSection }) => {
             </Button>
           }
         />
-         <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="section-type-select-label">
-            Select type 
-          </InputLabel>
+        <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
+          <InputLabel id="section-type-select-label">Select type</InputLabel>
           <Select
             label="Select type"
             labelId="section-type-select-label"
@@ -148,7 +155,7 @@ const EditSection = ({ section, toggleEditSection }) => {
             ))}
           </Select>
         </FormControl>
-        
+
         {formErrors._error && (
           <Typography variant="subtitle2" color="error">
             {formErrors._error}

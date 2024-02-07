@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
 
-import { useGetSectionsQuery } from "../../redux/sectionAPISlice ";
+import {
+  useGetSectionsGroupQuery,
+} from "../../redux/sectionAPISlice ";
 import EditSection from "./EditSection";
 import RouteConfig from "../../config/RouteConfig";
 
@@ -22,7 +24,7 @@ const DisplaySections = () => {
     isLoading,
     isError,
     error,
-  } = useGetSectionsQuery();
+  } = useGetSectionsGroupQuery();
 
   const toggleEditSection = (selectedSection) => {
     setShowEditSection((prevData) => !prevData);
@@ -50,78 +52,90 @@ const DisplaySections = () => {
 
   return (
     <>
-      <Typography variant="h5" mt={2}>
-        Sections
-      </Typography>
-
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {sectionData.map((section, index) => (
-          <Box
-            key={index}
-            sx={{
-              width: "110px",
-              ml: 2,
-              mt: 2,
-              position: "relative",
-              cursor: "pointer",
-            }}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            onClick={() => onClickSection(section)}
-          >
-            <Box
-              sx={{
-                marginBottom: "20px",
-                width: "110px",
-                height: "100px",
-                overflow: "hidden",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={section.image}
-                alt={section.title}
-                style={{
-                  width: "auto",
-                  height: "100px",
-                }}
-              />
-            </Box>
-            <Typography
-              variant="h6"
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "normal",
-                textAlign: "center",
-              }}
-            >
-              {section.title}
-            </Typography>
-            {hoveredIndex === index && (
-              <IconButton
+      {Object.keys(sectionData).map((type) => (
+        <Box
+          key={type}
+          sx={{
+            borderWidth: 10,
+            borderRadius: 2,
+            backgroundColor: "#f7f7f7",
+            marginBottom: 2,
+            padding: 2,
+          }}
+        >
+          <Typography variant="h5" my={2}>
+            {type}
+          </Typography>
+          <Box sx={{ display: "flex", flexWrap: "wrap",}}>
+            {sectionData[type].map((section, index) => (
+              <Box
+                key={index}
                 sx={{
-                  position: "absolute",
-                  top: 2,
-                  right: 2,
-                  bgcolor: "white",
-                  "&:hover": {
-                    bgcolor: "white",
-                  },
+                  width: "110px",
+                  ml: 2,
+                  mt: 2,
+                  position: "relative",
+                  cursor: "pointer",
                 }}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  toggleEditSection(section);
-                }}
+                onMouseEnter={() => setHoveredIndex(section.id)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => onClickSection(section)}
               >
-                <ModeEditSharpIcon />
-              </IconButton>
-            )}
+                <Box
+                  sx={{
+                    marginBottom: "20px",
+                    width: "110px",
+                    height: "100px",
+                    overflow: "hidden",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={section.image}
+                    alt={section.title}
+                    style={{
+                      width: "auto",
+                      height: "100px",
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "normal",
+                    textAlign: "center",
+                  }}
+                >
+                  {section.title}
+                </Typography>
+                {hoveredIndex === section.id && (
+                  <IconButton
+                    sx={{
+                      position: "absolute",
+                      top: 2,
+                      right: 2,
+                      bgcolor: "white",
+                      "&:hover": {
+                        bgcolor: "white",
+                      },
+                    }}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleEditSection(section);
+                    }}
+                  >
+                    <ModeEditSharpIcon />
+                  </IconButton>
+                )}
+              </Box>
+            ))}
           </Box>
-        ))}
-      </Box>
+        </Box>
+      ))}
 
       {showEditSection && (
         <>

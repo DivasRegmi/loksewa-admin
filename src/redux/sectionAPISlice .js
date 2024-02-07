@@ -7,6 +7,11 @@ export const sectionApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Sections"],
       invalidatesTags: ["Sections"],
     }),
+    getSectionsGroup: builder.query({
+      query: () => "/api/sections/grouped",
+      providesTags: ["Sections"],
+      invalidatesTags: ["Sections"],
+    }),
     getSectionsByCategoryId: builder.query({
       query: (categoryId) => `/api/sections/category/${categoryId}`,
       providesTags: ["SectionByCategorieId"],
@@ -35,6 +40,7 @@ export const sectionApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetSectionsQuery,
+  useGetSectionsGroupQuery,
   useGetSectionsByCategoryIdQuery,
   useAddSectionMutation,
   useUpdateSectionMutation,

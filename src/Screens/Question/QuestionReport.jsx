@@ -27,6 +27,7 @@ import {
 import AppSnackbar from "../../components/AppSnackbar";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import MyPagination from "../../components/MyPagination";
+import DisplayQuestionSolution from "./DisplayQuestionSolution";
 
 const reportOptions = [
   "QUESTION_NOT_UPDATED",
@@ -149,6 +150,39 @@ const QuestionReport = () => {
             }}
           >
             <Box sx={{ flexGrow: 1, maxWidth: "98%" }}>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    display: "inline-block",
+                    px: 0.5,
+                    py: 0.5,
+                    mb: 0.5,
+                    mr: 0.5,
+                    borderRadius: 2,
+                    backgroundColor: "#D45477",
+                    color: "#fff",
+                  }}
+                >
+                  {question.section.title}
+                </Typography>
+
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    display: "inline-block",
+                    px: 0.5,
+                    py: 0.5,
+
+                    borderRadius: 2,
+                    backgroundColor: "#0099ff",
+                    color: "#fff",
+                  }}
+                >
+                  {question.topic.title}
+                </Typography>
+              </Box>
+
               {selectedQuestion.id === question.id ? (
                 <EditQuestion
                   key={question.id}
@@ -156,7 +190,15 @@ const QuestionReport = () => {
                   toggleEditQuestion={toggleEditQuestion}
                 />
               ) : (
-                <Typography variant="subtitle1" sx={{ wordWrap: "break-word" }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    wordWrap: "break-word",
+                    textAlign: "justify",
+                    mt:1
+
+                  }}
+                >
                   {question.question}
                 </Typography>
               )}
@@ -227,35 +269,47 @@ const QuestionReport = () => {
                   )
                 )}
               </Box>
-              <Typography style={{ mb: 2 }}>
-                Report numbers: {question.reportCount}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  display: "inline-block",
-                  px: 2,
-                  py: 0.5,
-                  mb: 2,
-                  borderRadius: 2,
-                  backgroundColor: "#0099ff",
-                  color: "#fff",
-                }}
-              >
-                {question.topic.title}
-              </Typography>
+
+              <DisplayQuestionSolution
+                questionSolution={question.questionSolutionDescription}
+                questionId={question.id}
+                onSuccuss={() => refetch()}
+              />
 
               <br />
-              <Button
-                sx={{ ml: "auto" }}
-                variant="contained"
-                onClick={() => {
-                  handleConfirmationOpen();
-                  setSectionIdToDelete(question.id);
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                Solved
-              </Button>
+                <Typography
+                  sx={{
+                    display: "inline-block",
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 2,
+                    backgroundColor: "#DC143C",
+                    color: "#fff",
+                  }}
+                >
+                  Report: {question.reportCount}
+                </Typography>
+
+                <Button
+                  sx={{ ml: "auto" }}
+                  variant="contained"
+                  onClick={() => {
+                    handleConfirmationOpen();
+                    setSectionIdToDelete(question.id);
+                  }}
+                >
+                  Solved
+                </Button>
+              </Box>
+
               <ConfirmationDialog
                 title={"Confirm Solved"}
                 description={"Are you sure you want to delete this report?"}

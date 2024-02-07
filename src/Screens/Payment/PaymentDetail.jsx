@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
-import { format } from "date-fns";
+import { addMonths, format } from "date-fns";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import PaymentImage from "../../components/PaymentImage";
@@ -107,7 +107,6 @@ const PaymentDetail = ({ payment, refetchPaymentDetails }) => {
       paymentExpireDate: expiryDate,
     };
 
-
     updateUserMutation({ userId: userId, body });
   };
 
@@ -150,9 +149,14 @@ const PaymentDetail = ({ payment, refetchPaymentDetails }) => {
     handleConfirmationCloseForDelete();
   };
 
+  const updateExpiry = (duration) => {
+    const newExpiryDate = addMonths(new Date(), duration);
+    setExpiryDate(format(newExpiryDate, "yyyy-MM-dd"));
+  };
+
   return (
     <Card>
-      <CardContent style={{ display: "flex" }}>
+      <CardContent style={{ display: "flex", flexWrap: "wrap" }}>
         <PaymentImage image={image} />
         <div style={{ marginLeft: "25px", marginTop: 20 }}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -170,8 +174,11 @@ const PaymentDetail = ({ payment, refetchPaymentDetails }) => {
             </IconButton>
           </div>
 
-          <Typography variant="body1">name: {userName}</Typography>
-          <Typography variant="body1">PhoneNo: {userPhoneNo || "N/A"}</Typography>
+          <Typography variant="body1">UserId: {userId}</Typography>
+          <Typography variant="body1">Name: {userName}</Typography>
+          <Typography variant="body1">
+            PhoneNo: {userPhoneNo || "N/A"}
+          </Typography>
           <Typography variant="body1">Amount: {amount}</Typography>
           <Typography variant="body1">Remark: {remark || "N/A"}</Typography>
           <Typography variant="body1">Refer By: {referBy || "N/A"}</Typography>
@@ -206,6 +213,30 @@ const PaymentDetail = ({ payment, refetchPaymentDetails }) => {
               {error}
             </Typography>
           )}
+
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Button
+              sx={{ mt: 1 }}
+              variant="contained"
+              onClick={() => updateExpiry(1)}
+            >
+              Add 1 Month
+            </Button>
+            <Button
+              sx={{ mt: 1 }}
+              variant="contained"
+              onClick={() => updateExpiry(6)}
+            >
+              Add 6 Months
+            </Button>
+            <Button
+              sx={{ mt: 1 }}
+              variant="contained"
+              onClick={() => updateExpiry(12)}
+            >
+              Add 1 Year
+            </Button>
+          </Box>
 
           <Button
             type="submit"

@@ -96,15 +96,15 @@ const DisplayDailyDownloadUsers = () => {
       <Typography variant="h5" sx={{ mt: 2 }}>
         Monthly Download Users in the Last 6 Months
       </Typography>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" flexWrap={"wrap"}>
         {monthlyChartData.map((entry, index) => (
           <Box
             key={entry.month}
             sx={{
-              width: "15%",
+              width: "100px",
               textAlign: "center",
-              padding: 2,
-              margin:2,
+              padding: 1,
+              margin:1,
               backgroundColor: "#f0f0f0" , // Alternating background colors
             }}
           >

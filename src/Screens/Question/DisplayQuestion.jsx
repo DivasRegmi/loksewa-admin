@@ -8,22 +8,32 @@ import {
   Divider,
 } from "@mui/material";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import ErrorDisplay from "../../components/ErrorDisplay";
 import Loading from "../../components/Loading";
 import EditQuestion from "./EditQuestion";
 
-import { useGetQuestionsQuery } from "../../redux/QuestionsAPISlice";
+import {
+  useDeleteQuestionMutation,
+  useGetQuestionsQuery,
+} from "../../redux/QuestionsAPISlice";
 import EditChoice from "./EditChoice";
 import DisplayImage from "./DisplayImage";
 import MyPagination from "../../components/MyPagination";
 import DisplayQuestionSolution from "./DisplayQuestionSolution";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 
 const DisplayQuestion = ({ topicId }) => {
   const [selectedQuestion, setSelectedQuestion] = useState({ id: -1 });
   const [selectedChoice, setSelectedChoice] = useState({ id: -1 });
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [pageNo, setPageNo] = useState(0);
+
+  const [questionIdToDelete, setQuestionIdToDelete] = useState(null);
+
+  const [deleteQuestionConfirmationOpen, setDeleteQuestionConfirmationOpen] =
+    useState(false);
 
   const toggleEditQuestion = (selectedQuestion) => {
     setSelectedQuestion(selectedQuestion);
@@ -46,14 +56,42 @@ const DisplayQuestion = ({ topicId }) => {
     choices: true,
   });
 
+  const [deleteQuestion, { isError: isErrorOnDelete, error: errorOnDelete }] =
+    useDeleteQuestionMutation();
+
+  const handleDeleteQuestion = (id) => {
+    setQuestionIdToDelete(id);
+    handleDeleteQuestionConfirmationOpen();
+  };
+
+  const handleDeleteQuestionConfirmationOpen = () => {
+    setDeleteQuestionConfirmationOpen(true);
+  };
+
+  const handleDeleteQuestionConfirmationClose = () => {
+    setDeleteQuestionConfirmationOpen(false);
+  };
+
+  const handleConfirmDeleteQuestion = () => {
+    deleteQuestion(questionIdToDelete);
+    setQuestionIdToDelete(null);
+    handleDeleteQuestionConfirmationClose()
+  };
+
   if (isLoading) {
     return <Loading />;
   }
 
-  if (isError) {
+  if (isError || isErrorOnDelete) {
     let errMsg;
     if (error && error.data && error.data.message) {
       errMsg = error.data.message;
+    } else if (
+      errorOnDelete &&
+      errorOnDelete.data &&
+      errorOnDelete.data.message
+    ) {
+      errMsg = errorOnDelete.data.message;
     } else {
       errMsg = "Something went wrong. Please try again later.";
     }
@@ -91,20 +129,33 @@ const DisplayQuestion = ({ topicId }) => {
                   toggleEditQuestion={toggleEditQuestion}
                 />
               ) : (
-                <Typography variant="subtitle1" sx={{ wordWrap: "break-word" }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ wordWrap: "break-word", mr: 2 }}
+                >
+                  {question.id + ") "}
                   {question.question}
                 </Typography>
               )}
               {selectedQuestion.id === -1 && (
-                <IconButton
-                  sx={{ position: "absolute", top: 0, right: 8 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleEditQuestion(question);
-                  }}
-                >
-                  <EditSharpIcon />
-                </IconButton>
+                <Box sx={{ position: "absolute", top: 0, right: 8 }}>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleEditQuestion(question);
+                    }}
+                  >
+                    <EditSharpIcon color="#0099ff" />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={(e) => {
+                      handleDeleteQuestion(question.id);
+                    }}
+                  >
+                    <DeleteIcon color="#CE2029" />
+                  </IconButton>
+                </Box>
               )}
 
               <DisplayImage
@@ -180,6 +231,14 @@ const DisplayQuestion = ({ topicId }) => {
           onChangePage={(value) => setPageNo(value)}
         />
       </Box>
+
+      <ConfirmationDialog
+        title={"Confirm Delete"}
+        description={"Are you sure you want to delete question?"}
+        open={deleteQuestionConfirmationOpen}
+        handleClose={handleDeleteQuestionConfirmationClose}
+        handleConfirm={handleConfirmDeleteQuestion}
+      />
     </>
   );
 };

@@ -35,6 +35,13 @@ export const examApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Exams"],
     }),
+    addQuestionsToExamByQuestionId: builder.mutation({
+      query: ({ examId, questionId }) => ({
+        url: `/api/exams/${examId}/questions/${questionId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Exams"],
+    }),
     addQuestionsToExamBySectionId: builder.mutation({
       query: ({ examId, examModelSetSectionId }) => ({
         url: `/api/exams/${examId}/exam-model-set-section/${examModelSetSectionId}`,
@@ -60,7 +67,7 @@ export const {
 
   useAddExamMutation,
   useUpdateExamMutation,
-
+  useAddQuestionsToExamByQuestionIdMutation,
   useAddQuestionsToExamBySectionIdMutation,
 
   useDeleteExamByIdMutation,

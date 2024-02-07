@@ -21,6 +21,11 @@ export const questionsApiSlice = apiSlice.injectEndpoints({
       query: (searchTerm) => "/api/questions/search?searchTerm=" + searchTerm,
       providesTags: ["QuestionsBySearch"],
     }),
+    searchQuestionsV3: builder.query({
+      query: ({ searchTerm, pageNo = 0, pageSize = 10 }) =>
+        `/api/v3/questions/search?searchTerm=${searchTerm}&pageNo=${pageNo}&pageSize=${pageSize}`,
+      providesTags: ["QuestionsBySearch"],
+    }),
 
     addQuestion: builder.mutation({
       query: ({ topicId, body }) => ({
@@ -50,7 +55,7 @@ export const questionsApiSlice = apiSlice.injectEndpoints({
         url: `/api/questions/${questionId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Question"],
+      invalidatesTags: ["Questions"],
     }),
 
     getQuestionImage: builder.query({
@@ -88,6 +93,7 @@ export const {
   useGetQuestionByIdQuery,
   useGetQuestionsQuery,
   useLazySearchQuestionsQuery,
+  useLazySearchQuestionsV3Query,
   useAddQuestionMutation,
   useUpdateQuestionMutation,
   useUpdateChoiceMutation,

@@ -14,7 +14,15 @@ import { Add as AddIcon } from "@mui/icons-material";
 import AppSnackbar from "../../components/AppSnackbar";
 import { useAddSectionMutation } from "../../redux/sectionAPISlice ";
 
-const types = ["GK", "IQ", "ENGLISH", "GORKHAPATRA"];
+const types = [
+  "GK",
+  "IQ",
+  "ENGLISH",
+  "GORKHAPATRA",
+  "PUBLIC_MANAGEMENT",
+  "BANKING",
+  "OTHERS",
+];
 
 const AddSection = () => {
   const MAX_FILE_SIZE = 1000000; // 1MB in bytes
@@ -124,9 +132,7 @@ const AddSection = () => {
         />
 
         <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="section-type-select-label">
-            Select type 
-          </InputLabel>
+          <InputLabel id="section-type-select-label">Select type</InputLabel>
           <Select
             label="Select type"
             labelId="section-type-select-label"

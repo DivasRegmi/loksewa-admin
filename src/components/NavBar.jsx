@@ -11,10 +11,12 @@ const Navbar = styled(AppBar)({
 
 const LinkStyled = styled(NavLink)({
   color: "#fff",
-  marginLeft: "1rem",
+  marginLeft: "8px",
+  padding: "0.2rem",
   textDecoration: "none",
   "&.active": {
     fontWeight: "bold",
+    color: "#ff9900",
   },
 });
 
@@ -30,7 +32,10 @@ const NavBar = () => {
     <Navbar position="sticky">
       <Toolbar>
         <Typography
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            display: { xs: "none", sm: "block" }, // Hide on xs (extra small) screens
+          }}
           variant="h6"
           color="inherit"
           onClick={() => {
@@ -39,7 +44,8 @@ const NavBar = () => {
         >
           Loksewa
         </Typography>
-        <Box ml={"auto"}>
+
+        <Box sx={{ py:1, display: "flex", flexWrap: "wrap", ml: "auto", justifyContent:"space-between" }}>
           <LinkStyled to="/">Home</LinkStyled>
           <LinkStyled to={RouteConfig.USERS_SCREEN}>Users</LinkStyled>
           <LinkStyled to={RouteConfig.PAYMENT}>Payment</LinkStyled>

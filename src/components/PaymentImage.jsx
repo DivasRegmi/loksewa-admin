@@ -13,7 +13,16 @@ const PaymentImage = ({ image }) => {
   return (
     <>
       <div style={{ cursor: "pointer" }} onClick={handleClick}>
-        <img src={image} alt="Payment Detail" style={{ maxHeight: "720px" }} />
+        <img
+          src={image}
+          alt="Payment Detail"
+          style={{
+            maxHeight: "720px",
+            maxWidth: "500px",
+            objectFit: "contain",
+            width: "100%",
+          }}
+        />
       </div>
       {showLargeImage && (
         <div

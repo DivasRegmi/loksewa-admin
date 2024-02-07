@@ -101,6 +101,7 @@ const DisplayImage = ({ src, questionId, onSuccuss }) => {
         />
       ) : (
         <Button
+          sx={{  mt:1 }}
           onClick={() => {
             setDisplayEditImage(true);
           }}

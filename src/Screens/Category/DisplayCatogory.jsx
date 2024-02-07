@@ -55,13 +55,12 @@ const DisplayCatogory = () => {
         Categories
       </Typography>
 
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent:"space-around" }}>
         {categoryData.map((category, index) => (
           <Box
             key={index}
             sx={{
               width: "110px",
-              ml: 2,
               mt: 2,
               position: "relative",
               cursor: "pointer",

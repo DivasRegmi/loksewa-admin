@@ -6,7 +6,6 @@ import {
   List,
   Box,
   ListItem,
-  Divider,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
@@ -18,7 +17,6 @@ import ExamModelSetSectionDropDown from "../../components/ExamModelSetSectionDro
 import Loading from "../../components/Loading";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import MyPagination from "../../components/MyPagination";
-import AddQuestionFromExam from "./AddQuestionFromExam";
 import RouteConfig from "../../config/RouteConfig";
 
 const ExamDetails = () => {
