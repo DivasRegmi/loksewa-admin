@@ -8,9 +8,7 @@ export const questionsReportApiSlice = apiSlice.injectEndpoints({
         "?pageNo=" +
         args.pageNo +
         "&pageSize=" +
-        args.pageSize +
-        "&report=" +
-        args.report,
+        args.pageSize,
       providesTags: ["Questions"],
     }),
 

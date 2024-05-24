@@ -3,13 +3,9 @@ import {
   Box,
   Button,
   Divider,
-  FormControl,
   IconButton,
-  InputLabel,
   List,
   ListItem,
-  MenuItem,
-  Select,
   Typography,
 } from "@mui/material";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -30,15 +26,9 @@ import ConfirmationDialog from "../../components/ConfirmationDialog";
 import MyPagination from "../../components/MyPagination";
 import DisplayQuestionSolution from "./DisplayQuestionSolution";
 import { useDeleteQuestionMutation } from "../../redux/QuestionsAPISlice";
-
-const reportOptions = [
-  "QUESTION_NOT_UPDATED",
-  "QUESTION_PRINT_MISTAKE",
-  "WRONG_CHOICES",
-];
+import DisplayReportDescriptionAnduser from "./DisplayReportDescriptionAnduser";
 
 const QuestionReport = () => {
-  const [selectedReport, setSelectedReport] = useState(reportOptions[0]);
   const [selectedQuestion, setSelectedQuestion] = useState({ id: -1 });
   const [selectedChoice, setSelectedChoice] = useState({ id: -1 });
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -67,15 +57,9 @@ const QuestionReport = () => {
     isError,
     refetch,
   } = useGetQuestionsReportQuery({
-    report: selectedReport,
     pageNo: pageNo,
-    pageSize: 10,
+    pageSize: 100,
   });
-
-  const handleReportChange = (event) => {
-    setSelectedReport(event.target.value);
-    refetch();
-  };
 
   const [
     deleteQuestionReportMutation,
@@ -147,28 +131,10 @@ const QuestionReport = () => {
 
   return (
     <>
-      <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
-        <InputLabel id="report-select-label">Select report type</InputLabel>
-        <Select
-          labelId="report-select-label"
-          id="report-select"
-          value={selectedReport}
-          onChange={handleReportChange}
-          label="Select report type"
-        >
-          {reportOptions.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <Divider sx={{ my: 2 }} />
-
       <Typography variant="h5" sx={{ my: 2 }}>
         Reports
       </Typography>
+      <Divider />
 
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {reports.content.map((question) => (
@@ -317,6 +283,12 @@ const QuestionReport = () => {
                 questionId={question.id}
                 onSuccuss={() => refetch()}
               />
+
+              <Box sx={{display:"flex", flexDirection:"column"}}>
+                <DisplayReportDescriptionAnduser
+                  data={question.reportDescriptions}
+                />
+              </Box>
 
               <br />
 

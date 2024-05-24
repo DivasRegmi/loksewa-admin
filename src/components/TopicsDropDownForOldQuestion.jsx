@@ -12,6 +12,7 @@ const TopicsDropDownForOldQuestion = ({ selectedTopic, handleChange }) => {
     BANKING_OLD_QUESTION: 48,
     TSC_OLD_QUESTION: 49,
     TECHNICAL_OLD_QUESTION: 50,
+    ENGLISH_OLD_QUESTION: 52,
   };
 
   const {

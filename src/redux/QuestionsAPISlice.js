@@ -7,7 +7,7 @@ export const questionsApiSlice = apiSlice.injectEndpoints({
     }),
     getQuestions: builder.query({
       query: (args) =>
-        "/api/topics/" +
+        "/api/v2/topics/" +
         args.topicId +
         "/questions?pageNo=" +
         args.pageNo +
