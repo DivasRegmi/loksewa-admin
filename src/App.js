@@ -7,6 +7,7 @@ import NotFoundPage from "./components/NotFoundPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import SuspenseRoutes from "./components/SuspenseRoutes";
 import AddQuestionsManuallyScreen from "./Screens/Exam/AddQuestionsManuallyScreen";
+import DeleteUserScreen from "./Screens/deleteUser/DeleteuserScreen";
 
 const Home = lazy(() => import("./Screens/Home/Home"));
 const BannerScreen = lazy(() => import("./Screens/Banner/BannerScreen"));
@@ -61,6 +62,8 @@ function App() {
             path={RouteConfig.REGISTER_SCREEN}
             element={<RegisterScreen />}
           />
+
+          <Route path={RouteConfig.DELETE_USER_SCREEN} element={<DeleteUserScreen />} />
 
           <Route element={<PrivateRoutes />}>
             <Route index element={<Home />} />

@@ -35,6 +35,9 @@ const RouteConfig = {
 
   USERS_SCREEN: "users",
   EDIT_USER_SCREEN: "edit-user",
+
+
+  DELETE_USER_SCREEN: "request-delete-account",
 };
 
 export default RouteConfig;

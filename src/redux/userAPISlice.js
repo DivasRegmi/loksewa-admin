@@ -16,9 +16,22 @@ export const userApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+
+    deleteAccount: builder.mutation({
+      query: ({ phoneNumber, reasonForDeletion }) => {
+        return {
+          url: `/api/delete-account`,
+          method: "POST",
+          body: { phoneNumber, reasonForDeletion },
+        };
+      },
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useLazyFindUserByPhoneNoQuery, useUpdateUserMutation } =
-  userApiSlice;
+export const {
+  useLazyFindUserByPhoneNoQuery,
+  useUpdateUserMutation,
+  useDeleteAccountMutation,
+} = userApiSlice;
